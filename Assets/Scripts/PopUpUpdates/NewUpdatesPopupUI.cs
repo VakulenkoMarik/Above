@@ -39,11 +39,8 @@ namespace UpgradeSystem
 
         public void StartAction()
         {
-            Debug.Log(isAlreadyCheckedForUpdates);
-
             if (!isAlreadyCheckedForUpdates)
             {
-                Debug.Log("is not already checked");
                 StopAllCoroutines();
                 StartCoroutine(CheckForUpdates());
             }
@@ -81,7 +78,6 @@ namespace UpgradeSystem
                 }
                 else
                 {
-                    Debug.Log("No updates");
                     FirebaseAuthManager.instance.StartAction();
                 }
             }

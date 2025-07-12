@@ -44,8 +44,6 @@ public class WIFIChecking : MonoBehaviour
 
             if (sceneName == "Game")
             {
-                Debug.Log("Stop player");
-
                 PauseController.instance.Hero.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
                 PauseController.instance.Hero.GetComponent<Player>().isCanMove = false;
             }
@@ -91,8 +89,6 @@ public class WIFIChecking : MonoBehaviour
         }
         else
         {
-            Debug.Log("No wifi errors");
-            
             NewUpdatesPopupUI.instance.StartAction();
             errorPanel.SetActive(false);
 
@@ -105,7 +101,6 @@ public class WIFIChecking : MonoBehaviour
     {
         if (sceneName == "Authentication" && !isAuthInitialized)
         {
-            Debug.Log("Scene is auth");
             StartCoroutine(AuthCheckWIFI());
             return;
         }
@@ -115,7 +110,6 @@ public class WIFIChecking : MonoBehaviour
 
     void RepeatCheck()
     {
-        Debug.Log("RepeatCheck");
         ChangeSceneName();
 
         InvokeRepeating("CheckInternet", 0, 3);
