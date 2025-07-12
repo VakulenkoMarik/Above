@@ -11,7 +11,10 @@ namespace DependencyControl
 
         protected virtual void OnDestroy()
         {
-            Dependency.UnRegister(GetType(), this);
+            if (Application.isPlaying)
+            {
+                Dependency.UnRegister(GetType(), this);
+            }
         }
     }
 }
