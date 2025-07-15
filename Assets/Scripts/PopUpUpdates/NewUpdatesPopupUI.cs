@@ -1,10 +1,11 @@
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.Networking;
 using System.Collections;
+using Firebase.Auth;
 using TMPro;
+using UnityEngine;
+using UnityEngine.Networking;
+using UnityEngine.UI;
 
-namespace UpgradeSystem
+namespace PopUpUpdates
 {
     struct GameData
     {

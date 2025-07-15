@@ -1,28 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class GeneratorWalls : MonoBehaviour
+namespace Game
 {
-    [SerializeField] private GameObject wall;
-    [SerializeField] private Transform generatorPoint;
-    [SerializeField] private float offset;
-    [SerializeField] private float additionalDistance;
-
-    float backgroundHeight;
-
-    void Start()
+    public class GeneratorWalls : MonoBehaviour
     {
-        backgroundHeight = wall.GetComponentInChildren<SpriteRenderer>().bounds.size.y;
-    }
+        [SerializeField] private GameObject wall;
+        [SerializeField] private Transform generatorPoint;
+        [SerializeField] private float offset;
+        [SerializeField] private float additionalDistance;
 
-    void Update()
-    {
-        if (transform.position.y + offset < generatorPoint.position.y)
+        float backgroundHeight;
+
+        void Start()
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y + backgroundHeight + additionalDistance, transform.position.z);
+            backgroundHeight = wall.GetComponentInChildren<SpriteRenderer>().bounds.size.y;
+        }
 
-            Instantiate(wall, transform.position, transform.rotation);
+        void Update()
+        {
+            if (transform.position.y + offset < generatorPoint.position.y)
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y + backgroundHeight + additionalDistance, transform.position.z);
+
+                Instantiate(wall, transform.position, transform.rotation);
+            }
         }
     }
 }

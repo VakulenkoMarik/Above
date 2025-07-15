@@ -1,16 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class DestroyPoint : MonoBehaviour
+namespace Game
 {
-    public static GameObject destroyPoint;
-
-    void Update()
+    public class DestroyPoint : MonoBehaviour
     {
-        if (transform.position.y < destroyPoint.transform.position.y)
+        public static GameObject destroyPoint;
+
+        void Update()
         {
-            Destroy(gameObject);
+            if (transform.position.y < destroyPoint.transform.position.y)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }

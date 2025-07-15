@@ -1,40 +1,45 @@
+using Encrypting;
+using Firebase.Storage;
 using UnityEngine;
 
-public class SelectCharacter : MonoBehaviour
+namespace MainMenu.Select
 {
-    private int i;
-
-    [SerializeField] private GameObject[] AllCharacters;
-
-    [SerializeField] private GameObject[] EquipButtons;
-    [SerializeField] private GameObject[] EquipedButtons;
-
-    void Start()
+    public class SelectCharacter : MonoBehaviour
     {
-        i = JsonStorage.instance.data.currentShop.currentSkin;
+        private int i;
 
-        EquipedButtons[i].SetActive(true);
-        EquipButtons[i].SetActive(false);
+        [SerializeField] private GameObject[] AllCharacters;
 
-        AllCharacters[i].SetActive(true);
-    }
+        [SerializeField] private GameObject[] EquipButtons;
+        [SerializeField] private GameObject[] EquipedButtons;
 
-    public void Change(int thisCharacter)
-    {
-        for (int i = 0; i < AllCharacters.Length; i++)
+        void Start()
         {
-            AllCharacters[i].SetActive(false);
-            EquipedButtons[i].SetActive(false);
-            EquipButtons[i].SetActive(true);
+            i = JsonStorage.instance.data.currentShop.currentSkin;
+
+            EquipedButtons[i].SetActive(true);
+            EquipButtons[i].SetActive(false);
+
+            AllCharacters[i].SetActive(true);
         }
 
-        JsonStorage.instance.data.currentShop.currentSkin = thisCharacter;
+        public void Change(int thisCharacter)
+        {
+            for (int i = 0; i < AllCharacters.Length; i++)
+            {
+                AllCharacters[i].SetActive(false);
+                EquipedButtons[i].SetActive(false);
+                EquipButtons[i].SetActive(true);
+            }
 
-        CryptoHelper.Encrypt(JsonStorage.instance.data, JsonStorage.instance.password);
+            JsonStorage.instance.data.currentShop.currentSkin = thisCharacter;
 
-        AllCharacters[thisCharacter].SetActive(true);
+            CryptoHelper.Encrypt(JsonStorage.instance.data, JsonStorage.instance.password);
 
-        EquipedButtons[thisCharacter].SetActive(true);
-        EquipButtons[thisCharacter].SetActive(false);
+            AllCharacters[thisCharacter].SetActive(true);
+
+            EquipedButtons[thisCharacter].SetActive(true);
+            EquipButtons[thisCharacter].SetActive(false);
+        }
     }
 }

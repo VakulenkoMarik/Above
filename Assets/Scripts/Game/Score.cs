@@ -1,28 +1,31 @@
-using System.Collections;
 using System.Collections.Generic;
+using Game.Obstacles;
 using TMPro;
 using UnityEngine;
 
-public class Score : MonoBehaviour
+namespace Game
 {
-    [SerializeField] private Transform player;
-    public static Score instance;
-    public TextMeshProUGUI scoreText;
-
-    [SerializeField] private List<SpawnObstKoefManager> listOfKoefs;
-    public List<SpawnObstKoefManager> ListOfKoefs
+    public class Score : MonoBehaviour
     {
-        get => listOfKoefs;
-        private set => listOfKoefs = value;
-    }
+        [SerializeField] private Transform player;
+        public static Score instance;
+        public TextMeshProUGUI scoreText;
 
-    void Start()
-    {
-        instance = this;
-    }
+        [SerializeField] private List<SpawnObstKoefManager> listOfKoefs;
+        public List<SpawnObstKoefManager> ListOfKoefs
+        {
+            get => listOfKoefs;
+            private set => listOfKoefs = value;
+        }
 
-    private void Update()
-    {
-        scoreText.text = ((int)(player.position.y)).ToString();
+        void Start()
+        {
+            instance = this;
+        }
+
+        private void Update()
+        {
+            scoreText.text = ((int)(player.position.y)).ToString();
+        }
     }
 }

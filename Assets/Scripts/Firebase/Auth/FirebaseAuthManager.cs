@@ -1,340 +1,253 @@
-using System.Collections;
-using UnityEngine;
-using Firebase;
-using Firebase.Auth;
-using TMPro;
-using UnityEngine.SceneManagement;
-using System.Threading.Tasks;
-using Firebase.Extensions;
 using System;
+using System.Collections;
+using System.Threading.Tasks;
+using Firebase.Data;
+using Firebase.Extensions;
 using Firebase.Storage;
-using System.IO;
+using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using WifiControl;
 
-public class FirebaseAuthManager : MonoBehaviour
+namespace Firebase.Auth
 {
-    public static FirebaseAuthManager instance;
-    private FirebaseStorage storageInstance;
+    public class FirebaseAuthManager : MonoBehaviour
+    {
+        public static FirebaseAuthManager instance;
+        private FirebaseStorage storageInstance;
 
-    [Header("Firebase")]
-    public FirebaseAuth auth;
-    public FirebaseUser user;
-    public FirebaseApp app;
-    public GameObject storage;
+        [Header("Firebase")]
+        public FirebaseAuth auth;
+        public FirebaseUser user;
+        public FirebaseApp app;
+        public GameObject storage;
     
-    [Space]
-    [Header("Login")]
-    public TMP_InputField emailLoginField;
-    public TMP_InputField passwordLoginField;
+        [Space]
+        [Header("Login")]
+        public TMP_InputField emailLoginField;
+        public TMP_InputField passwordLoginField;
 
-    [Space]
-    [Header("Registration")]
-    public TMP_InputField nameRegisterField;
-    public TMP_InputField emailRegisterField;
-    public TMP_InputField passwordRegisterField;
-    public TMP_InputField confirmPasswordRegisterField;
+        [Space]
+        [Header("Registration")]
+        public TMP_InputField nameRegisterField;
+        public TMP_InputField emailRegisterField;
+        public TMP_InputField passwordRegisterField;
+        public TMP_InputField confirmPasswordRegisterField;
 
-    [Space]
-    [Header("Foget password")]
-    [SerializeField] private TMP_InputField fogetPassField;
-    [SerializeField] private GameObject sendResetPassText;
+        [Space]
+        [Header("Foget password")]
+        [SerializeField] private TMP_InputField fogetPassField;
+        [SerializeField] private GameObject sendResetPassText;
 
-    [Space]
-    [Header("Other")]
-    [SerializeField] private GameObject loading;
-    [SerializeField] private Button startOnlineGameButton;
+        [Space]
+        [Header("Other")]
+        [SerializeField] private GameObject loading;
+        [SerializeField] private Button startOnlineGameButton;
 
-    private static bool isReady = false;
-    public static string exeption = "";
+        private static bool isReady = false;
+        public static string exeption = "";
 
-    async Task Awake()
-    {
-        if (instance == null)
+        async Task Awake()
         {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        await CheckIfReady();
-    }
-
-    void Start()
-    {
-        if (WIFIChecking.instance != null)
-        {
-            WIFIChecking.instance.ChangeSceneName();
-        }
-    }
-
-    public async void StartAction()
-    {
-        while (isReady == false)
-        {
-            await Task.Delay(1000);
+            if (instance == null)
+            {
+                instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+                return;
+            }
 
             await CheckIfReady();
         }
 
-        InitializeFirebase();
-        StartCoroutine(CheckForAutoLogin());
-    }
-
-    async Task CheckIfReady()
-    {
-        try
+        void Start()
         {
-            await FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
+            if (WIFIChecking.instance != null)
             {
-                var dependencyStatus = task.Result;
+                WIFIChecking.instance.ChangeSceneName();
+            }
+        }
 
-                if (dependencyStatus == DependencyStatus.Available)
+        public async void StartAction()
+        {
+            while (isReady == false)
+            {
+                await Task.Delay(1000);
+
+                await CheckIfReady();
+            }
+
+            InitializeFirebase();
+            StartCoroutine(CheckForAutoLogin());
+        }
+
+        async Task CheckIfReady()
+        {
+            try
+            {
+                await FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
                 {
-                    if (FirebaseApp.DefaultInstance == null)
+                    var dependencyStatus = task.Result;
+
+                    if (dependencyStatus == DependencyStatus.Available)
                     {
-                        Firebase.AppOptions options = new Firebase.AppOptions();
+                        if (FirebaseApp.DefaultInstance == null)
+                        {
+                            Firebase.AppOptions options = new Firebase.AppOptions();
 
-                        options.ApiKey = "AIzaSyBBKdqnwmjChKTZrcJf9yluEj_vIuIOJLo";
-                        options.AppId = "1:222329630877:android:91e403f4a340caea3f2474";
-                        options.ProjectId = "above-acb46";
-                        options.StorageBucket = "above-acb46.appspot.com";
-                        options.DatabaseUrl = new System.Uri("https://above-acb46-default-rtdb.europe-west1.firebasedatabase.app/");
+                            options.ApiKey = "AIzaSyBBKdqnwmjChKTZrcJf9yluEj_vIuIOJLo";
+                            options.AppId = "1:222329630877:android:91e403f4a340caea3f2474";
+                            options.ProjectId = "above-acb46";
+                            options.StorageBucket = "above-acb46.appspot.com";
+                            options.DatabaseUrl = new System.Uri("https://above-acb46-default-rtdb.europe-west1.firebasedatabase.app/");
 
-                        app = FirebaseApp.Create(options);
-                    }
+                            app = FirebaseApp.Create(options);
+                        }
                     
 
-                    storageInstance = FirebaseStorage.GetInstance(app, "gs://above-acb46.appspot.com");
+                        storageInstance = FirebaseStorage.GetInstance(app, "gs://above-acb46.appspot.com");
 
-                    isReady = true;
-                }
-                else
+                        isReady = true;
+                    }
+                    else
+                    {
+                        Debug.LogError(System.String.Format(
+                            "Could not resolve all Firebase dependencies: {0}", dependencyStatus));
+                    }
+                });
+            }
+            catch (System.Exception ex)
+            {
+                exeption = ex.Message.ToString();
+            }
+        }
+
+        void InitializeFirebase()
+        {
+            auth = FirebaseAuth.DefaultInstance;
+
+            auth.StateChanged += AuthStateChanged;
+            AuthStateChanged(this, null);
+
+            StorageData.instance.auth = auth;
+        }
+
+        private IEnumerator CheckForAutoLogin()
+        {
+            if (user != null)
+            {
+                var reloadUserTask = user.ReloadAsync();
+
+                yield return new WaitUntil(() => reloadUserTask.IsCompleted);
+
+                AutoLogin();
+            }
+            else
+            {
+                loading.SetActive(false);
+
+                AddListenerToStartButton(UIManager.Instance.OpenLoginPanel);
+
+                UIManager.Instance.ActivateButtons();
+            }
+        }
+
+        public void AddListenerToStartButton(Action a)
+        {
+            startOnlineGameButton.onClick.RemoveAllListeners();
+            startOnlineGameButton.onClick.AddListener(a.Invoke);
+        }
+
+        private void AutoLogin()
+        {
+            if (user != null && user.IsEmailVerified)
+            {
+                if (storage != null)
                 {
-                    Debug.LogError(System.String.Format(
-                        "Could not resolve all Firebase dependencies: {0}", dependencyStatus));
+                    storage.SetActive(true);
                 }
-            });
-        }
-        catch (System.Exception ex)
-        {
-            exeption = ex.Message.ToString();
-        }
-    }
-
-    void InitializeFirebase()
-    {
-        auth = FirebaseAuth.DefaultInstance;
-
-        auth.StateChanged += AuthStateChanged;
-        AuthStateChanged(this, null);
-
-        StorageData.instance.auth = auth;
-    }
-
-    private IEnumerator CheckForAutoLogin()
-    {
-        if (user != null)
-        {
-            var reloadUserTask = user.ReloadAsync();
-
-            yield return new WaitUntil(() => reloadUserTask.IsCompleted);
-
-            AutoLogin();
-        }
-        else
-        {
-            loading.SetActive(false);
-
-            AddListenerToStartButton(UIManager.Instance.OpenLoginPanel);
-
-            UIManager.Instance.ActivateButtons();
-        }
-    }
-
-    public void AddListenerToStartButton(Action a)
-    {
-        startOnlineGameButton.onClick.RemoveAllListeners();
-        startOnlineGameButton.onClick.AddListener(a.Invoke);
-    }
-
-    private void AutoLogin()
-    {
-        if (user != null && user.IsEmailVerified)
-        {
-            if (storage != null)
-            {
-                storage.SetActive(true);
-            }
-
-            UserData.instance.User = user;
-            UserData.instance.metadata = user.Metadata;
-
-            AddListenerToStartButton(OpenGameScene);
-        }
-        else
-        {
-            AddListenerToStartButton(UIManager.Instance.OpenLoginPanel);
-        }
-        
-        UIManager.Instance.ActivateButtons();
-        loading.SetActive(false);
-    }
-
-    void AuthStateChanged(object sender, System.EventArgs eventArgs)
-    {
-        if (auth.CurrentUser != user)
-        {
-            bool signedIn = user != auth.CurrentUser && auth.CurrentUser != null;
-
-            if (!signedIn && user != null)
-            {
-                Debug.Log("Signed out " + user.UserId);
-
-                if (UIManager.Instance != null)
-                {
-                    AddListenerToStartButton(UIManager.Instance.OpenLoginPanel);
-                }
-                
-                ClearLoginInputFieldText();
-            }
-
-            user = auth.CurrentUser;
-
-            if (signedIn)
-            {
-                Debug.Log("Signed in " + user.UserId);
-            }
-        }
-    }
-
-    public void ClearLoginInputFieldText()
-    {
-        emailLoginField.text = "";
-        passwordLoginField.text = "";
-    }
-
-    public void ClearRegisterInputFieldText()
-    {
-        nameRegisterField.text = "";
-        emailRegisterField.text = "";
-        passwordRegisterField.text = "";
-        confirmPasswordRegisterField.text = "";
-    }
-
-    public void Logout()
-    {
-        StorageData.instance.DeleteJson();
-    }
-
-    public void Login()
-    {
-        StartCoroutine(LoginAsync(emailLoginField.text, passwordLoginField.text));
-    }
-
-    private IEnumerator LoginAsync(string email, string password)
-    {
-        var loginTask = auth.SignInWithEmailAndPasswordAsync(email, password);
-
-        yield return new WaitUntil(() => loginTask.IsCompleted);
-
-        if (loginTask.Exception != null)
-        {
-            FirebaseException firebaseException = loginTask.Exception.GetBaseException() as FirebaseException;
-            AuthError authError = (AuthError)firebaseException.ErrorCode;
-
-            string failedMessage = "Login Failed! Because ";
-
-            switch (authError)
-            {
-                case AuthError.InvalidEmail:
-                    failedMessage += "Email is invalid";
-                    break;
-                case AuthError.WrongPassword:
-                    failedMessage += "Wrong Password";
-                    break;
-                case AuthError.MissingEmail:
-                    failedMessage += "Email is missing";
-                    break;
-                case AuthError.MissingPassword:
-                    failedMessage += "Password is missing";
-                    break;
-                default:
-                    failedMessage = "Login Failed";
-                    break;
-            }
-
-            UIManager.Instance.SetErrorMessage(failedMessage);
-        }
-        else
-        {
-            user = loginTask.Result.User;
-
-            if (user.IsEmailVerified)
-            {
-                GameManager.instance.SetActiveLoadingScreen(true);
-
-                GameManager.instance.SetMessage("User login");
-
-                yield return new WaitForSeconds(2);
 
                 UserData.instance.User = user;
                 UserData.instance.metadata = user.Metadata;
 
-                GameManager.instance.SetMessage("Opening game scene");
-
-                OpenGameScene();
+                AddListenerToStartButton(OpenGameScene);
             }
             else
             {
-                SendEmailForVerification();
+                AddListenerToStartButton(UIManager.Instance.OpenLoginPanel);
+            }
+        
+            UIManager.Instance.ActivateButtons();
+            loading.SetActive(false);
+        }
+
+        void AuthStateChanged(object sender, System.EventArgs eventArgs)
+        {
+            if (auth.CurrentUser != user)
+            {
+                bool signedIn = user != auth.CurrentUser && auth.CurrentUser != null;
+
+                if (!signedIn && user != null)
+                {
+                    Debug.Log("Signed out " + user.UserId);
+
+                    if (UIManager.Instance != null)
+                    {
+                        AddListenerToStartButton(UIManager.Instance.OpenLoginPanel);
+                    }
+                
+                    ClearLoginInputFieldText();
+                }
+
+                user = auth.CurrentUser;
+
+                if (signedIn)
+                {
+                    Debug.Log("Signed in " + user.UserId);
+                }
             }
         }
-    }
 
-    public void Register()
-    {
-        GameManager.instance.SetActiveLoadingScreen(true);
-        StartCoroutine(RegisterAsync(nameRegisterField.text, emailRegisterField.text, passwordRegisterField.text, confirmPasswordRegisterField.text));
-    }
-
-    private IEnumerator RegisterAsync(string name, string email, string password, string confirmPassword)
-    {
-        yield return new WaitForSeconds(0.5f);
-
-        if (name == "")
+        public void ClearLoginInputFieldText()
         {
-            UIManager.Instance.SetErrorMessage("User Name is empty");
-            GameManager.instance.SetActiveLoadingScreen(false);
+            emailLoginField.text = "";
+            passwordLoginField.text = "";
         }
-        else if (email == "")
-        {
-            UIManager.Instance.SetErrorMessage("email field is empty");
-            GameManager.instance.SetActiveLoadingScreen(false);
-        }
-        else if (!string.Equals(password, confirmPassword, StringComparison.Ordinal))
-        {
-            UIManager.Instance.SetErrorMessage("Password does not match");
-            GameManager.instance.SetActiveLoadingScreen(false);
-            yield break;
-        }
-        else
-        {
-            var registerTask = auth.CreateUserWithEmailAndPasswordAsync(email, password);
 
-            yield return new WaitUntil(() => registerTask.IsCompleted);
+        public void ClearRegisterInputFieldText()
+        {
+            nameRegisterField.text = "";
+            emailRegisterField.text = "";
+            passwordRegisterField.text = "";
+            confirmPasswordRegisterField.text = "";
+        }
 
-            if (registerTask.Exception != null)
+        public void Logout()
+        {
+            StorageData.instance.DeleteJson();
+        }
+
+        public void Login()
+        {
+            StartCoroutine(LoginAsync(emailLoginField.text, passwordLoginField.text));
+        }
+
+        private IEnumerator LoginAsync(string email, string password)
+        {
+            var loginTask = auth.SignInWithEmailAndPasswordAsync(email, password);
+
+            yield return new WaitUntil(() => loginTask.IsCompleted);
+
+            if (loginTask.Exception != null)
             {
-                GameManager.instance.SetActiveLoadingScreen(false);
-                Debug.LogError(registerTask.Exception);
-
-                FirebaseException firebaseException = registerTask.Exception.GetBaseException() as FirebaseException;
+                FirebaseException firebaseException = loginTask.Exception.GetBaseException() as FirebaseException;
                 AuthError authError = (AuthError)firebaseException.ErrorCode;
 
-                string failedMessage = "Registration Failed! Becuase ";
+                string failedMessage = "Login Failed! Because ";
+
                 switch (authError)
                 {
                     case AuthError.InvalidEmail:
@@ -350,7 +263,7 @@ public class FirebaseAuthManager : MonoBehaviour
                         failedMessage += "Password is missing";
                         break;
                     default:
-                        failedMessage = "Registration Failed";
+                        failedMessage = "Login Failed";
                         break;
                 }
 
@@ -358,25 +271,71 @@ public class FirebaseAuthManager : MonoBehaviour
             }
             else
             {
-                user = registerTask.Result.User;
+                user = loginTask.Result.User;
 
-                UserProfile userProfile = new UserProfile { DisplayName = name };
-
-                var updateProfileTask = user.UpdateUserProfileAsync(userProfile);
-
-                yield return new WaitUntil(() => updateProfileTask.IsCompleted);
-
-                if (updateProfileTask.Exception != null)
+                if (user.IsEmailVerified)
                 {
-                    user.DeleteAsync();
+                    GameManager.instance.SetActiveLoadingScreen(true);
 
-                    Debug.LogError(updateProfileTask.Exception);
+                    GameManager.instance.SetMessage("User login");
 
-                    FirebaseException firebaseException = updateProfileTask.Exception.GetBaseException() as FirebaseException;
+                    yield return new WaitForSeconds(2);
+
+                    UserData.instance.User = user;
+                    UserData.instance.metadata = user.Metadata;
+
+                    GameManager.instance.SetMessage("Opening game scene");
+
+                    OpenGameScene();
+                }
+                else
+                {
+                    SendEmailForVerification();
+                }
+            }
+        }
+
+        public void Register()
+        {
+            GameManager.instance.SetActiveLoadingScreen(true);
+            StartCoroutine(RegisterAsync(nameRegisterField.text, emailRegisterField.text, passwordRegisterField.text, confirmPasswordRegisterField.text));
+        }
+
+        private IEnumerator RegisterAsync(string name, string email, string password, string confirmPassword)
+        {
+            yield return new WaitForSeconds(0.5f);
+
+            if (name == "")
+            {
+                UIManager.Instance.SetErrorMessage("User Name is empty");
+                GameManager.instance.SetActiveLoadingScreen(false);
+            }
+            else if (email == "")
+            {
+                UIManager.Instance.SetErrorMessage("email field is empty");
+                GameManager.instance.SetActiveLoadingScreen(false);
+            }
+            else if (!string.Equals(password, confirmPassword, StringComparison.Ordinal))
+            {
+                UIManager.Instance.SetErrorMessage("Password does not match");
+                GameManager.instance.SetActiveLoadingScreen(false);
+                yield break;
+            }
+            else
+            {
+                var registerTask = auth.CreateUserWithEmailAndPasswordAsync(email, password);
+
+                yield return new WaitUntil(() => registerTask.IsCompleted);
+
+                if (registerTask.Exception != null)
+                {
+                    GameManager.instance.SetActiveLoadingScreen(false);
+                    Debug.LogError(registerTask.Exception);
+
+                    FirebaseException firebaseException = registerTask.Exception.GetBaseException() as FirebaseException;
                     AuthError authError = (AuthError)firebaseException.ErrorCode;
 
-
-                    string failedMessage = "Profile update Failed! Becuase ";
+                    string failedMessage = "Registration Failed! Becuase ";
                     switch (authError)
                     {
                         case AuthError.InvalidEmail:
@@ -392,183 +351,226 @@ public class FirebaseAuthManager : MonoBehaviour
                             failedMessage += "Password is missing";
                             break;
                         default:
-                            failedMessage = "Profile update Failed";
+                            failedMessage = "Registration Failed";
                             break;
                     }
 
                     UIManager.Instance.SetErrorMessage(failedMessage);
-
-                    GameManager.instance.SetActiveLoadingScreen(false);
                 }
                 else
                 {
-                    Debug.Log("Registration Sucessful Welcome " + user.DisplayName);
+                    user = registerTask.Result.User;
 
-                    if (user.IsEmailVerified)
+                    UserProfile userProfile = new UserProfile { DisplayName = name };
+
+                    var updateProfileTask = user.UpdateUserProfileAsync(userProfile);
+
+                    yield return new WaitUntil(() => updateProfileTask.IsCompleted);
+
+                    if (updateProfileTask.Exception != null)
                     {
-                        UIManager.Instance.OpenLoginPanel();
+                        user.DeleteAsync();
+
+                        Debug.LogError(updateProfileTask.Exception);
+
+                        FirebaseException firebaseException = updateProfileTask.Exception.GetBaseException() as FirebaseException;
+                        AuthError authError = (AuthError)firebaseException.ErrorCode;
+
+
+                        string failedMessage = "Profile update Failed! Becuase ";
+                        switch (authError)
+                        {
+                            case AuthError.InvalidEmail:
+                                failedMessage += "Email is invalid";
+                                break;
+                            case AuthError.WrongPassword:
+                                failedMessage += "Wrong Password";
+                                break;
+                            case AuthError.MissingEmail:
+                                failedMessage += "Email is missing";
+                                break;
+                            case AuthError.MissingPassword:
+                                failedMessage += "Password is missing";
+                                break;
+                            default:
+                                failedMessage = "Profile update Failed";
+                                break;
+                        }
+
+                        UIManager.Instance.SetErrorMessage(failedMessage);
 
                         GameManager.instance.SetActiveLoadingScreen(false);
                     }
                     else
                     {
-                        SendEmailForVerification();
+                        Debug.Log("Registration Sucessful Welcome " + user.DisplayName);
 
-                        GameManager.instance.SetActiveLoadingScreen(false);
+                        if (user.IsEmailVerified)
+                        {
+                            UIManager.Instance.OpenLoginPanel();
+
+                            GameManager.instance.SetActiveLoadingScreen(false);
+                        }
+                        else
+                        {
+                            SendEmailForVerification();
+
+                            GameManager.instance.SetActiveLoadingScreen(false);
+                        }
                     }
                 }
             }
         }
-    }
 
-    public void SendEmailForVerification()
-    {
-        StartCoroutine(SendEmailForVerificationAsync());
-    }
-
-    private IEnumerator SendEmailForVerificationAsync()
-    {
-        if (user != null)
+        public void SendEmailForVerification()
         {
-            var sendEmailTask = user.SendEmailVerificationAsync();
+            StartCoroutine(SendEmailForVerificationAsync());
+        }
 
-            yield return new WaitUntil(() => sendEmailTask.IsCompleted);
-
-            if (sendEmailTask.Exception != null)
+        private IEnumerator SendEmailForVerificationAsync()
+        {
+            if (user != null)
             {
-                FirebaseException firebaseException = sendEmailTask.Exception.GetBaseException() as FirebaseException;
-                AuthError error = (AuthError) firebaseException.ErrorCode;
+                var sendEmailTask = user.SendEmailVerificationAsync();
 
-                string errorMessage = "Unknown Error : Please try again later";
+                yield return new WaitUntil(() => sendEmailTask.IsCompleted);
 
-                switch (error)
+                if (sendEmailTask.Exception != null)
                 {
-                    case AuthError.Cancelled:
-                        errorMessage = "Email verification was cancelled";
-                        break;
-                    case AuthError.TooManyRequests:
-                        errorMessage = "Too many request";
-                        break;
-                    case AuthError.InvalidRecipientEmail:
-                        errorMessage = "The email you entered is invalid";
-                        break;
-                }
+                    FirebaseException firebaseException = sendEmailTask.Exception.GetBaseException() as FirebaseException;
+                    AuthError error = (AuthError) firebaseException.ErrorCode;
 
-                UIManager.Instance.ShowVerificationResponse(false, user.Email, errorMessage);
+                    string errorMessage = "Unknown Error : Please try again later";
+
+                    switch (error)
+                    {
+                        case AuthError.Cancelled:
+                            errorMessage = "Email verification was cancelled";
+                            break;
+                        case AuthError.TooManyRequests:
+                            errorMessage = "Too many request";
+                            break;
+                        case AuthError.InvalidRecipientEmail:
+                            errorMessage = "The email you entered is invalid";
+                            break;
+                    }
+
+                    UIManager.Instance.ShowVerificationResponse(false, user.Email, errorMessage);
+                }
+                else
+                {
+                    Debug.Log("Email has successfully sent");
+                    UIManager.Instance.ShowVerificationResponse(true, user.Email, null);
+                }
+            }
+        }
+
+        public async void OpenGameScene()
+        {
+            await StartGame();
+        }
+
+        async Task StartGame()
+        {
+            GameManager.instance.SetActiveLoadingScreen(true);
+        
+            GameManager.instance.SetMessage("Start game");
+
+            if (storage != null)
+            {
+                storage.SetActive(true);
+            }
+
+            StorageData.instance.SetStorage(storageInstance);
+            StorageData.instance.SetReference();
+        
+            await JsonStorage.instance.StartAction();
+
+            GameManager.instance.SetMessage("Start action");
+
+            await Task.Delay(1000);
+        
+            GameManager.instance.GetComponent<AudioSource>().volume = JsonStorage.instance.data.audioSettings.musicMainMenu;
+
+            bool tutorial = JsonStorage.instance.data.boolean.isTutorial;
+
+            GameManager.instance.SetMessage("");
+
+            instance = null;
+            UIManager.Instance = null;
+
+            if (tutorial == false)
+            {
+                GameManager.instance.GetComponent<AudioSource>().enabled = false;
+                JsonStorage.instance.data.boolean.isTutorial = true;
+
+                JsonStorage.instance.data.audioSettings.musicGame = 0.5f;
+                JsonStorage.instance.data.audioSettings.musicMainMenu = 0.5f;
+                JsonStorage.instance.data.audioSettings.sfxGame = 1;
+                JsonStorage.instance.data.audioSettings.sfxMainMenu = 1;
+
+                GameManager.instance.SetActiveLoadingScreen(false);
+
+                await Task.Delay(500);
+
+                SceneManager.LoadSceneAsync("Tutorial");
             }
             else
             {
-                Debug.Log("Email has successfully sent");
-                UIManager.Instance.ShowVerificationResponse(true, user.Email, null);
+                SceneManager.LoadSceneAsync("MainMenu");
             }
         }
-    }
 
-    public async void OpenGameScene()
-    {
-        await StartGame();
-    }
-
-    async Task StartGame()
-    {
-        GameManager.instance.SetActiveLoadingScreen(true);
-        
-        GameManager.instance.SetMessage("Start game");
-
-        if (storage != null)
+        public void PlayOffline()
         {
-            storage.SetActive(true);
+            GameManager.instance.GetComponent<AudioSource>().volume = 0.7f;
+
+            SceneManager.LoadSceneAsync("OfflineMenu");
         }
 
-        StorageData.instance.SetStorage(storageInstance);
-        StorageData.instance.SetReference();
-        
-        await JsonStorage.instance.StartAction();
-
-        GameManager.instance.SetMessage("Start action");
-
-        await Task.Delay(1000);
-        
-        GameManager.instance.GetComponent<AudioSource>().volume = JsonStorage.instance.data.audioSettings.musicMainMenu;
-
-        bool tutorial = JsonStorage.instance.data.boolean.isTutorial;
-
-        GameManager.instance.SetMessage("");
-
-        instance = null;
-        UIManager.Instance = null;
-
-        if (tutorial == false)
+        public void FogetPassword()
         {
-            GameManager.instance.GetComponent<AudioSource>().enabled = false;
-            JsonStorage.instance.data.boolean.isTutorial = true;
-
-            JsonStorage.instance.data.audioSettings.musicGame = 0.5f;
-            JsonStorage.instance.data.audioSettings.musicMainMenu = 0.5f;
-            JsonStorage.instance.data.audioSettings.sfxGame = 1;
-            JsonStorage.instance.data.audioSettings.sfxMainMenu = 1;
-
-            GameManager.instance.SetActiveLoadingScreen(false);
-
-            await Task.Delay(500);
-
-            SceneManager.LoadSceneAsync("Tutorial");
-        }
-        else
-        {
-            SceneManager.LoadSceneAsync("MainMenu");
-        }
-    }
-
-    public void PlayOffline()
-    {
-        GameManager.instance.GetComponent<AudioSource>().volume = 0.7f;
-
-        SceneManager.LoadSceneAsync("OfflineMenu");
-    }
-
-    public void FogetPassword()
-    {
-        UIManager.Instance.ClearUI();
+            UIManager.Instance.ClearUI();
         
-        if (string.IsNullOrEmpty(fogetPassField.text))
-        {
-            UIManager.Instance.SetErrorMessage("The email field cannot be empty");
-            return;
-        }
-
-        FogetPassSubmit(fogetPassField.text);
-    }
-
-    void FogetPassSubmit(string email)
-    {
-        auth.SendPasswordResetEmailAsync(email).ContinueWithOnMainThread(task => {
-            if (task.Exception != null)
+            if (string.IsNullOrEmpty(fogetPassField.text))
             {
-                FirebaseException firebaseException = task.Exception.GetBaseException() as FirebaseException;
-                AuthError error = (AuthError)firebaseException.ErrorCode;
+                UIManager.Instance.SetErrorMessage("The email field cannot be empty");
+                return;
+            }
 
-                string failedMessage = "";
+            FogetPassSubmit(fogetPassField.text);
+        }
 
-                switch (error)
+        void FogetPassSubmit(string email)
+        {
+            auth.SendPasswordResetEmailAsync(email).ContinueWithOnMainThread(task => {
+                if (task.Exception != null)
                 {
-                    case AuthError.InvalidEmail:
-                        failedMessage += "Email is invalid";
-                        break;
-                    case AuthError.MissingEmail:
-                        failedMessage += "Email is missing";
-                        break;
-                    default:
-                        failedMessage = "Login Failed";
-                        break;
-                }
+                    FirebaseException firebaseException = task.Exception.GetBaseException() as FirebaseException;
+                    AuthError error = (AuthError)firebaseException.ErrorCode;
 
-                UIManager.Instance.SetErrorMessage("Error: " + failedMessage);
-            }
-            else
-            {
-                sendResetPassText.SetActive(true);
-            }
-        });
+                    string failedMessage = "";
+
+                    switch (error)
+                    {
+                        case AuthError.InvalidEmail:
+                            failedMessage += "Email is invalid";
+                            break;
+                        case AuthError.MissingEmail:
+                            failedMessage += "Email is missing";
+                            break;
+                        default:
+                            failedMessage = "Login Failed";
+                            break;
+                    }
+
+                    UIManager.Instance.SetErrorMessage("Error: " + failedMessage);
+                }
+                else
+                {
+                    sendResetPassText.SetActive(true);
+                }
+            });
+        }
     }
 }

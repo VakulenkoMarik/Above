@@ -1,29 +1,33 @@
+using Firebase.Storage;
 using TMPro;
 using UnityEngine;
 
-public class CoinsManager : MonoBehaviour
+namespace Hero
 {
-    public static CoinsManager instance;
-
-    public int coinsF;
-    public int coinsS;
-
-    [SerializeField] private TextMeshProUGUI moneyTextF;
-    [SerializeField] private TextMeshProUGUI moneyTextS;
-
-    void Start()
+    public class CoinsManager : MonoBehaviour
     {
-        instance = this;
+        public static CoinsManager instance;
 
-        coinsF = JsonStorage.instance.data.userData.coinsF;
-        coinsS = JsonStorage.instance.data.userData.coinsS;
+        public int coinsF;
+        public int coinsS;
 
-        UpdateUI();
-    }
+        [SerializeField] private TextMeshProUGUI moneyTextF;
+        [SerializeField] private TextMeshProUGUI moneyTextS;
 
-    public void UpdateUI()
-    {
-        moneyTextF.text = coinsF + "";
-        moneyTextS.text = coinsS + "";
+        void Start()
+        {
+            instance = this;
+
+            coinsF = JsonStorage.instance.data.userData.coinsF;
+            coinsS = JsonStorage.instance.data.userData.coinsS;
+
+            UpdateUI();
+        }
+
+        public void UpdateUI()
+        {
+            moneyTextF.text = coinsF + "";
+            moneyTextS.text = coinsS + "";
+        }
     }
 }

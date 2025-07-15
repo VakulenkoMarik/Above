@@ -1,141 +1,147 @@
 using System.Collections;
+using Firebase.Storage;
+using Game;
+using Hero;
+using PopUpUpdates;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
-using UpgradeSystem;
 
-public class WIFIChecking : MonoBehaviour
+namespace WifiControl
 {
-    public static WIFIChecking instance;
-    [SerializeField] private GameObject errorPanel;
-    [SerializeField] private GameObject playOfflineButton;
-
-    private string sceneName;
-    private bool isAuthInitialized = false;
-
-    void Awake()
+    public class WIFIChecking : MonoBehaviour
     {
-        if (instance != null)
+        public static WIFIChecking instance;
+        [SerializeField] private GameObject errorPanel;
+        [SerializeField] private GameObject playOfflineButton;
+
+        private string sceneName;
+        private bool isAuthInitialized = false;
+
+        void Awake()
         {
-            Destroy(gameObject);
-            return;
-        }
-
-        instance = this;
-
-        DontDestroyOnLoad(gameObject);
-    }
-
-    void Start()
-    {
-        RepeatCheck();
-    }
-
-    IEnumerator CheckInternetConection()
-    {
-        UnityWebRequest request = new UnityWebRequest("https://www.google.com/");
-
-        yield return request.SendWebRequest();
-
-        if (request.error != null)
-        {
-            errorPanel.SetActive(true);
-            JsonStorage.instance.ActivateTimer(false);
-
-            if (sceneName == "Game")
+            if (instance != null)
             {
-                PauseController.instance.Hero.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-                PauseController.instance.Hero.GetComponent<Player>().isCanMove = false;
+                Destroy(gameObject);
+                return;
             }
-        }
-        else
-        {
-            errorPanel.SetActive(false);
 
-            if (JsonStorage.instance != null)
+            instance = this;
+
+            DontDestroyOnLoad(gameObject);
+        }
+
+        void Start()
+        {
+            RepeatCheck();
+        }
+
+        IEnumerator CheckInternetConection()
+        {
+            UnityWebRequest request = new UnityWebRequest("https://www.google.com/");
+
+            yield return request.SendWebRequest();
+
+            if (request.error != null)
             {
-                if (JsonStorage.instance.isFrozenTimer)
+                errorPanel.SetActive(true);
+                JsonStorage.instance.ActivateTimer(false);
+
+                if (sceneName == "Game")
                 {
-                    JsonStorage.instance.ActivateTimer(true);
+                    PauseController.instance.Hero.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+                    PauseController.instance.Hero.GetComponent<Player>().isCanMove = false;
                 }
             }
-            
-            if (sceneName == "Game")
+            else
             {
-                if (PauseController.instance.isPause == false && PauseController.instance.Hero != null)
-                {
-                    PauseController.instance.Hero.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+                errorPanel.SetActive(false);
 
-                    if (StartOnClick.instance == null)
+                if (JsonStorage.instance != null)
+                {
+                    if (JsonStorage.instance.isFrozenTimer)
                     {
-                        PauseController.instance.Hero.GetComponent<Player>().isCanMove = true;
+                        JsonStorage.instance.ActivateTimer(true);
+                    }
+                }
+            
+                if (sceneName == "Game")
+                {
+                    if (PauseController.instance.isPause == false && PauseController.instance.Hero != null)
+                    {
+                        PauseController.instance.Hero.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+
+                        if (StartOnClick.instance == null)
+                        {
+                            PauseController.instance.Hero.GetComponent<Player>().isCanMove = true;
+                        }
                     }
                 }
             }
         }
-    }
 
-    IEnumerator AuthCheckWIFI()
-    {
-        UnityWebRequest request = new UnityWebRequest("https://www.google.com/");
-
-        var asyncOperation = request.SendWebRequest();
-
-        yield return asyncOperation;
-
-        if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
+        IEnumerator AuthCheckWIFI()
         {
-            errorPanel.SetActive(true);
-        }
-        else
-        {
-            NewUpdatesPopupUI.instance.StartAction();
-            errorPanel.SetActive(false);
+            UnityWebRequest request = new UnityWebRequest("https://www.google.com/");
 
-            isAuthInitialized = true;
+            var asyncOperation = request.SendWebRequest();
 
-        }
-    }
+            yield return asyncOperation;
 
-    void CheckInternet()
-    {
-        if (sceneName == "Authentication" && !isAuthInitialized)
-        {
-            StartCoroutine(AuthCheckWIFI());
-            return;
+            if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
+            {
+                errorPanel.SetActive(true);
+            }
+            else
+            {
+                NewUpdatesPopupUI.instance.StartAction();
+                errorPanel.SetActive(false);
+
+                isAuthInitialized = true;
+
+            }
         }
 
-        StartCoroutine(CheckInternetConection());
-    }
-
-    void RepeatCheck()
-    {
-        ChangeSceneName();
-
-        InvokeRepeating("CheckInternet", 0, 3);
-    }
-
-    public void ChangeSceneName()
-    {
-        isAuthInitialized = false;
-
-        Scene sc = SceneManager.GetActiveScene();
-        sceneName = sc.name;
-
-        if (sceneName == "Authentication")
+        void CheckInternet()
         {
-            playOfflineButton.SetActive(true);
-        }
-        else
-        {
-            playOfflineButton.SetActive(false);
+            if (sceneName == "Authentication" && !isAuthInitialized)
+            {
+                StartCoroutine(AuthCheckWIFI());
+                return;
+            }
+
+            StartCoroutine(CheckInternetConection());
         }
 
-        if (sceneName == "OfflineMenu")
+        void RepeatCheck()
         {
-            CancelInvoke("CheckInternet");
-            instance = null;
-            Destroy(gameObject);
+            ChangeSceneName();
+
+            InvokeRepeating("CheckInternet", 0, 3);
+        }
+
+        public void ChangeSceneName()
+        {
+            isAuthInitialized = false;
+
+            Scene sc = SceneManager.GetActiveScene();
+            sceneName = sc.name;
+
+            if (sceneName == "Authentication")
+            {
+                playOfflineButton.SetActive(true);
+            }
+            else
+            {
+                playOfflineButton.SetActive(false);
+            }
+
+            if (sceneName == "OfflineMenu")
+            {
+                CancelInvoke("CheckInternet");
+                instance = null;
+                Destroy(gameObject);
+            }
         }
     }
 }

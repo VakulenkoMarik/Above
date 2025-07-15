@@ -1,27 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Firebase.Auth;
+using UnityEngine;
 
-public class UserData : MonoBehaviour
+namespace Firebase.Data
 {
-    public static UserData instance;
-
-    public FirebaseUser User;
-
-    public UserMetadata metadata;
-
-    private void Awake()
+    public class UserData : MonoBehaviour
     {
-        if (instance == null)
+        public static UserData instance;
+
+        public FirebaseUser User;
+
+        public UserMetadata metadata;
+
+        private void Awake()
         {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-            return;
+            if (instance == null)
+            {
+                instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+                return;
+            }
         }
     }
 }

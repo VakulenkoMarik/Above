@@ -1,27 +1,31 @@
 using System.Collections;
+using Firebase.Storage;
 using UnityEngine;
 
-public class SelectBgInGame : MonoBehaviour
+namespace Game
 {
-    private int i = 0;
+    public class SelectBgInGame : MonoBehaviour
+    {
+        private int i = 0;
 
-    [SerializeField] private GameObject[] AllBg;
-    [SerializeField] private GameObject[] AllRailings;
+        [SerializeField] private GameObject[] AllBg;
+        [SerializeField] private GameObject[] AllRailings;
     
-    void Start()
-    {
-        StartCoroutine(StartActivity());
-    }
+        void Start()
+        {
+            StartCoroutine(StartActivity());
+        }
 
-    IEnumerator StartActivity()
-    {
-        i = JsonStorage.instance.data.currentShop.currentBg;
+        IEnumerator StartActivity()
+        {
+            i = JsonStorage.instance.data.currentShop.currentBg;
 
-        AllBg[i].SetActive(true);
-        AllRailings[i].SetActive(true);
+            AllBg[i].SetActive(true);
+            AllRailings[i].SetActive(true);
 
-        yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(1f);
 
-        GameManager.instance.SetActiveLoadingScreen(false);
+            GameManager.instance.SetActiveLoadingScreen(false);
+        }
     }
 }

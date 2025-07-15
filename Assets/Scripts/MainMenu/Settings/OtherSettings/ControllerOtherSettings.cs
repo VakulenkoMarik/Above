@@ -1,61 +1,64 @@
-using System.Collections;
 using System.Collections.Generic;
+using Firebase.Storage;
 using UnityEngine;
 
-public class ControllerOtherSettings : MonoBehaviour
+namespace MainMenu.Settings.OtherSettings
 {
-    [Header ("## Menu settings : ")]
-    [SerializeField] private GameObject levelRanks;
-    [SerializeField] private GameObject boost;
-    [SerializeField] private List<MonoBehaviour> autoSaveScripts;
-    [SerializeField] private List<GameObject> particles;
-
-    void Start()
+    public class ControllerOtherSettings : MonoBehaviour
     {
-        ShowLevelRanks(JsonStorage.instance.data.otherSettings.showLevelRanks);
-        ActivateParticles(JsonStorage.instance.data.otherSettings.particles);
-        ShowTheSelectedBoost(JsonStorage.instance.data.otherSettings.showSelectedBoostInGame);
-    }
+        [Header ("## Menu settings : ")]
+        [SerializeField] private GameObject levelRanks;
+        [SerializeField] private GameObject boost;
+        [SerializeField] private List<MonoBehaviour> autoSaveScripts;
+        [SerializeField] private List<GameObject> particles;
 
-    public void ShowLevelRanks(bool tog)
-    {
-        if (tog == true)
+        void Start()
         {
-            levelRanks.SetActive(true);
+            ShowLevelRanks(JsonStorage.instance.data.otherSettings.showLevelRanks);
+            ActivateParticles(JsonStorage.instance.data.otherSettings.particles);
+            ShowTheSelectedBoost(JsonStorage.instance.data.otherSettings.showSelectedBoostInGame);
         }
-        else
-        {
-            levelRanks.SetActive(false);
-        }
-    }
 
-    public void ActivateParticles(bool tog)
-    {
-        if (tog == true)
+        public void ShowLevelRanks(bool tog)
         {
-            foreach (GameObject go in particles)
+            if (tog == true)
             {
-                go.SetActive(true);
+                levelRanks.SetActive(true);
+            }
+            else
+            {
+                levelRanks.SetActive(false);
             }
         }
-        else
+
+        public void ActivateParticles(bool tog)
         {
-            foreach (GameObject go in particles)
+            if (tog == true)
             {
-                go.SetActive(false);
+                foreach (GameObject go in particles)
+                {
+                    go.SetActive(true);
+                }
+            }
+            else
+            {
+                foreach (GameObject go in particles)
+                {
+                    go.SetActive(false);
+                }
             }
         }
-    }
 
-    public void ShowTheSelectedBoost(bool tog)
-    {
-        if (tog == true)
+        public void ShowTheSelectedBoost(bool tog)
         {
-            boost.SetActive(true);
-        }
-        else
-        {
-            boost.SetActive(false);
+            if (tog == true)
+            {
+                boost.SetActive(true);
+            }
+            else
+            {
+                boost.SetActive(false);
+            }
         }
     }
 }

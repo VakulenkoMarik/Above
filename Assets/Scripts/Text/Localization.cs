@@ -1,12 +1,15 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Localization : MonoBehaviour
+namespace Text
 {
-    public void ChangeLanguage(string language)
+    public class Localization : MonoBehaviour
     {
-        PlayerPrefs.SetString("Language", language);
+        public void ChangeLanguage(string language)
+        {
+            PlayerPrefs.SetString("Language", language);
 
-        SceneManager.LoadSceneAsync("Authentication");
+            SceneManager.LoadSceneAsync("Authentication");
+        }
     }
 }

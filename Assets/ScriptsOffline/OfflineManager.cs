@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using WifiControl;
 
 public class OfflineManager : MonoBehaviour
 {

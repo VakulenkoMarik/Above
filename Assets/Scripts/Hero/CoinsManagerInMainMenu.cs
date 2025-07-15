@@ -1,65 +1,69 @@
 using System.Collections;
-using UnityEngine;
+using Firebase.Storage;
 using TMPro;
+using UnityEngine;
 
-public class CoinsManagerInMainMenu : MonoBehaviour
+namespace Hero
 {
-    public static CoinsManagerInMainMenu instance;
-
-    public int coinsF;
-    public int coinsS;
-
-    [SerializeField] private TextMeshProUGUI SuperCoinsText;
-    [SerializeField] private TextMeshProUGUI FlyCoinsText;
-    [SerializeField] private TextMeshProUGUI SuperCoinsInShopText;
-    [SerializeField] private TextMeshProUGUI FlyCoinsInShopText;
-    [SerializeField] private TextMeshProUGUI AdsForSupercoinsCount;
-
-    [SerializeField] private GameObject fAdErrorPanel;
-    [SerializeField] private GameObject sAdErrorPanel;
-
-    private void Start()
+    public class CoinsManagerInMainMenu : MonoBehaviour
     {
-        instance = this;
+        public static CoinsManagerInMainMenu instance;
 
-        coinsF = JsonStorage.instance.data.userData.coinsF;
-        coinsS = JsonStorage.instance.data.userData.coinsS;
+        public int coinsF;
+        public int coinsS;
 
-        UpdateUI();
-    }
+        [SerializeField] private TextMeshProUGUI SuperCoinsText;
+        [SerializeField] private TextMeshProUGUI FlyCoinsText;
+        [SerializeField] private TextMeshProUGUI SuperCoinsInShopText;
+        [SerializeField] private TextMeshProUGUI FlyCoinsInShopText;
+        [SerializeField] private TextMeshProUGUI AdsForSupercoinsCount;
 
-    public void UpdateUI()
-    {
-        coinsF = JsonStorage.instance.data.userData.coinsF;
-        coinsS = JsonStorage.instance.data.userData.coinsS;
+        [SerializeField] private GameObject fAdErrorPanel;
+        [SerializeField] private GameObject sAdErrorPanel;
+
+        private void Start()
+        {
+            instance = this;
+
+            coinsF = JsonStorage.instance.data.userData.coinsF;
+            coinsS = JsonStorage.instance.data.userData.coinsS;
+
+            UpdateUI();
+        }
+
+        public void UpdateUI()
+        {
+            coinsF = JsonStorage.instance.data.userData.coinsF;
+            coinsS = JsonStorage.instance.data.userData.coinsS;
         
-        SuperCoinsText.text = coinsS + "";
-        FlyCoinsText.text = coinsF + "";
-        SuperCoinsInShopText.text = coinsS + "";
-        FlyCoinsInShopText.text = coinsF + "";
-    }
+            SuperCoinsText.text = coinsS + "";
+            FlyCoinsText.text = coinsF + "";
+            SuperCoinsInShopText.text = coinsS + "";
+            FlyCoinsInShopText.text = coinsF + "";
+        }
 
-    public void UpdateAdRewardUI(int ads)
-    {
-        AdsForSupercoinsCount.text = ads + " / 6"; 
-    }
+        public void UpdateAdRewardUI(int ads)
+        {
+            AdsForSupercoinsCount.text = ads + " / 6"; 
+        }
 
-    public void ShowFErrorAd()
-    {
-        StartCoroutine(ErrorAd(fAdErrorPanel));
-    }
+        public void ShowFErrorAd()
+        {
+            StartCoroutine(ErrorAd(fAdErrorPanel));
+        }
 
-    public void ShowSErrorAd()
-    {
-        StartCoroutine(ErrorAd(sAdErrorPanel));
-    }
+        public void ShowSErrorAd()
+        {
+            StartCoroutine(ErrorAd(sAdErrorPanel));
+        }
 
-    IEnumerator ErrorAd(GameObject panel)
-    {
-        panel.SetActive(true);
+        IEnumerator ErrorAd(GameObject panel)
+        {
+            panel.SetActive(true);
 
-        yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(1.5f);
 
-        panel.SetActive(false);
+            panel.SetActive(false);
+        }
     }
 }

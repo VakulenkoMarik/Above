@@ -1,31 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class GeneratorBackground : MonoBehaviour
+namespace Game
 {
-    [SerializeField] private GameObject background;
-    [SerializeField] private Transform generatorPoint;
-    [SerializeField] private float offset;
-
-    float backgroundHeight;
-
-    [SerializeField] private AudioClip audioClip;
-
-    void Start()
+    public class GeneratorBackground : MonoBehaviour
     {
-        Camera.main.GetComponent<AudioSource>().clip = audioClip;
+        [SerializeField] private GameObject background;
+        [SerializeField] private Transform generatorPoint;
+        [SerializeField] private float offset;
 
-        backgroundHeight = background.GetComponent<SpriteRenderer>().bounds.size.y;
-    }
+        float backgroundHeight;
 
-    void Update()
-    {
-        if (transform.position.y + offset < generatorPoint.position.y)
+        [SerializeField] private AudioClip audioClip;
+
+        void Start()
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y + backgroundHeight - 0.005f, transform.position.z);
+            Camera.main.GetComponent<AudioSource>().clip = audioClip;
 
-            Instantiate(background, transform.position, transform.rotation);
+            backgroundHeight = background.GetComponent<SpriteRenderer>().bounds.size.y;
+        }
+
+        void Update()
+        {
+            if (transform.position.y + offset < generatorPoint.position.y)
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y + backgroundHeight - 0.005f, transform.position.z);
+
+                Instantiate(background, transform.position, transform.rotation);
+            }
         }
     }
 }

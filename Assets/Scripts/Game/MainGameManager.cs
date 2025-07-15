@@ -1,62 +1,61 @@
 using System.Collections;
-using System.Collections.Generic;
+using Firebase.Storage;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MainGameManager : MonoBehaviour
+namespace Game
 {
-    public static MainGameManager instance;
-
-    [Header ("## Audio :")]
-    [SerializeField] private AudioSource[] SFX;
-    [SerializeField] private Slider musicSlider;
-    [SerializeField] private Slider sfxSlider;
-
-    [HideInInspector]
-    public AudioSource audioSource;
-
-    private bool isReady = false;
-    
-    void Start()
+    public class MainGameManager : MonoBehaviour
     {
-        instance = this;
+        [Header ("## Audio :")]
+        [SerializeField] private AudioSource[] SFX;
+        [SerializeField] private Slider musicSlider;
+        [SerializeField] private Slider sfxSlider;
 
-        audioSource = GetComponent<AudioSource>();
+        [HideInInspector]
+        public AudioSource audioSource;
 
-        musicSlider.value = JsonStorage.instance.data.audioSettings.musicGame;
-        sfxSlider.value = JsonStorage.instance.data.audioSettings.sfxGame;
-        Debug.Log(sfxSlider.value + "sfx slider");
-
-        audioSource.volume = musicSlider.value;
-
-        float sfxVolume = JsonStorage.instance.data.audioSettings.sfxGame;
-
-        for (int i = 0; i < SFX.Length; i++)
+        private bool isReady = false;
+    
+        void Start()
         {
-            SFX[i].volume = sfxVolume;
+            audioSource = GetComponent<AudioSource>();
+
+            musicSlider.value = JsonStorage.instance.data.audioSettings.musicGame;
+            sfxSlider.value = JsonStorage.instance.data.audioSettings.sfxGame;
+            Debug.Log(sfxSlider.value + "sfx slider");
+
+            audioSource.volume = musicSlider.value;
+
+            float sfxVolume = JsonStorage.instance.data.audioSettings.sfxGame;
+
+            for (int i = 0; i < SFX.Length; i++)
+            {
+                SFX[i].volume = sfxVolume;
+            }
+
+            isReady = true;
+        
+            StartCoroutine(GameMusicOn());
         }
 
-        isReady = true;
-        
-        StartCoroutine(GameMusicOn());
-    }
-
-    private IEnumerator GameMusicOn()
-    {
-        yield return new WaitForSeconds(0.5f);
-
-        audioSource.enabled = true;
-    }
-
-    public void SaveAudioSettings()
-    {
-        if (isReady)
+        private IEnumerator GameMusicOn()
         {
-            AudioControl.SetAudioSetting(musicSlider.value, "musicGame");
-            AudioControl.SetAudioSetting(sfxSlider.value, "sfxGame");
+            yield return new WaitForSeconds(0.5f);
 
-            AudioControl.SetAudioValue(musicSlider, audioSource);
-            AudioControl.SetAudioValue(sfxSlider, SFX);
+            audioSource.enabled = true;
+        }
+
+        public void SaveAudioSettings()
+        {
+            if (isReady)
+            {
+                AudioControl.SetAudioSetting(musicSlider.value, "musicGame");
+                AudioControl.SetAudioSetting(sfxSlider.value, "sfxGame");
+
+                AudioControl.SetAudioValue(musicSlider, audioSource);
+                AudioControl.SetAudioValue(sfxSlider, SFX);
+            }
         }
     }
 }

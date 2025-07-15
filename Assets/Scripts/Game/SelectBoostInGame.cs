@@ -1,34 +1,38 @@
+using Firebase.Storage;
 using UnityEngine;
 
-public class SelectBoostInGame : MonoBehaviour
+namespace Game
 {
-    [SerializeField] private Color shieldColor;
-    [SerializeField] private Color standartColor;
-
-    [SerializeField] private GameObject[] Heroes;
-    [SerializeField] private GameObject[] AllBoosts;
-
-    private int i;
-
-    void Start()
+    public class SelectBoostInGame : MonoBehaviour
     {
-        i = JsonStorage.instance.data.currentShop.currentBoost;
+        [SerializeField] private Color shieldColor;
+        [SerializeField] private Color standartColor;
 
-        if (i == 3)
-        {
-            for (int i = 0; i < Heroes.Length; i++)
-            {
-                Heroes[i].GetComponent<SpriteRenderer>().color = shieldColor;
-            }
-        }
-        else
-        {
-            for (int i = 0; i < Heroes.Length; i++)
-            {
-                Heroes[i].GetComponent<SpriteRenderer>().color = standartColor;
-            }
-        }
+        [SerializeField] private GameObject[] Heroes;
+        [SerializeField] private GameObject[] AllBoosts;
 
-        AllBoosts[i].SetActive(true);
+        private int i;
+
+        void Start()
+        {
+            i = JsonStorage.instance.data.currentShop.currentBoost;
+
+            if (i == 3)
+            {
+                for (int i = 0; i < Heroes.Length; i++)
+                {
+                    Heroes[i].GetComponent<SpriteRenderer>().color = shieldColor;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < Heroes.Length; i++)
+                {
+                    Heroes[i].GetComponent<SpriteRenderer>().color = standartColor;
+                }
+            }
+
+            AllBoosts[i].SetActive(true);
+        }
     }
 }

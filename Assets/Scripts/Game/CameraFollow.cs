@@ -1,29 +1,34 @@
+using Firebase.Storage;
 using UnityEngine;
+using WifiControl;
 
-public class CameraFollow : MonoBehaviour
+namespace Game
 {
-    public Transform doodlePos;
-    [SerializeField] private GameObject boost;
-    [SerializeField] private bool isTutorial;
-
-    void Start()
+    public class CameraFollow : MonoBehaviour
     {
-        WIFIChecking.instance.ChangeSceneName();
+        public Transform doodlePos;
+        [SerializeField] private GameObject boost;
+        [SerializeField] private bool isTutorial;
+
+        void Start()
+        {
+            WIFIChecking.instance.ChangeSceneName();
         
-        if (isTutorial) return;
+            if (isTutorial) return;
 
-        if (!JsonStorage.instance.data.otherSettings.showSelectedBoostInGame)
-        {
-            boost.SetActive(false);
+            if (!JsonStorage.instance.data.otherSettings.showSelectedBoostInGame)
+            {
+                boost.SetActive(false);
+            }
         }
-    }
 
-    void Update()
-    {
-        if (doodlePos.position.y > transform.position.y)
+        void Update()
         {
-            transform.position = new Vector3(transform.position.x,
-                doodlePos.position.y, transform.position.z);
+            if (doodlePos.position.y > transform.position.y)
+            {
+                transform.position = new Vector3(transform.position.x,
+                    doodlePos.position.y, transform.position.z);
+            }
         }
     }
 }

@@ -1,30 +1,31 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 using UnityEngine.Video;
 
-public class Intro : MonoBehaviour
+namespace Other
 {
-    [SerializeField] private GameObject videoPlayer;
-
-    void Start()
+    public class Intro : MonoBehaviour
     {
-        StartCoroutine(IntroAsync());
-    }
+        [SerializeField] private GameObject videoPlayer;
 
-    private IEnumerator IntroAsync()
-    {
-        float duration = (float)videoPlayer.GetComponent<VideoPlayer>().clip.length + 1;
-        Debug.Log("" + duration);
+        void Start()
+        {
+            StartCoroutine(IntroAsync());
+        }
 
-        yield return new WaitForSeconds(1f);
+        private IEnumerator IntroAsync()
+        {
+            float duration = (float)videoPlayer.GetComponent<VideoPlayer>().clip.length + 1;
+            Debug.Log("" + duration);
+
+            yield return new WaitForSeconds(1f);
         
-        videoPlayer.SetActive(true);
+            videoPlayer.SetActive(true);
 
-        yield return new WaitForSeconds(duration);
+            yield return new WaitForSeconds(duration);
 
-        SceneManager.LoadSceneAsync("Authentication");
+            SceneManager.LoadSceneAsync("Authentication");
+        }
     }
 }

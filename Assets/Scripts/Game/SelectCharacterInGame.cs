@@ -1,15 +1,19 @@
+using Firebase.Storage;
 using UnityEngine;
 
-public class SelectCharacterInGame : MonoBehaviour
+namespace Game
 {
-    private int i = 0;
-
-    [SerializeField] private GameObject[] AllCharacters;
-
-    void Start()
+    public class SelectCharacterInGame : MonoBehaviour
     {
-        i = JsonStorage.instance.data.currentShop.currentSkin;
+        private int i = 0;
 
-        AllCharacters[i].SetActive(true);
+        [SerializeField] private GameObject[] AllCharacters;
+
+        void Start()
+        {
+            i = JsonStorage.instance.data.currentShop.currentSkin;
+
+            AllCharacters[i].SetActive(true);
+        }
     }
 }
