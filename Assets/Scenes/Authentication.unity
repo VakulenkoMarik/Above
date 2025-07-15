@@ -2645,7 +2645,7 @@ MonoBehaviour:
   clip: {fileID: 8300000, guid: 3c81522a1b622364b88a9ff463d3a8d8, type: 3}
   loop: 0
   volumeOffset: 0
-  channel: 1
+  channel: 2
 --- !u!114 &272357423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25502,7 +25502,7 @@ MonoBehaviour:
   clip: {fileID: 8300000, guid: 3c81522a1b622364b88a9ff463d3a8d8, type: 3}
   loop: 0
   volumeOffset: 0
-  channel: 1
+  channel: 2
 --- !u!114 &1115705317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30554,10 +30554,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 719729b20a1e8dc4dadd4f4040045d57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: ac5ffa49e676ddd428375d6cd6b54edd, type: 3}
   loop: 0
   volumeOffset: 0
-  channel: 0
+  channel: 2
 --- !u!114 &1756679320
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30576,8 +30576,8 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1756679319}
-          m_TargetAssemblyTypeName: BtnSFX, Assembly-CSharp
-          m_MethodName: ClickSound
+          m_TargetAssemblyTypeName: Audio.AudioPlayer, Assembly-CSharp
+          m_MethodName: PlayOneShot
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}

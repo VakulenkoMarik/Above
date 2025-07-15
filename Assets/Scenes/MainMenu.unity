@@ -3898,8 +3898,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 719729b20a1e8dc4dadd4f4040045d57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myFX: {fileID: 441983582}
-  clickFX: {fileID: 8300000, guid: ac5ffa49e676ddd428375d6cd6b54edd, type: 3}
+  clip: {fileID: 0}
+  loop: 0
+  volumeOffset: 0
+  channel: 0
 --- !u!114 &106811780
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7682,8 +7684,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 719729b20a1e8dc4dadd4f4040045d57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myFX: {fileID: 441983582}
-  clickFX: {fileID: 8300000, guid: ac5ffa49e676ddd428375d6cd6b54edd, type: 3}
+  clip: {fileID: 0}
+  loop: 0
+  volumeOffset: 0
+  channel: 0
 --- !u!114 &198374817
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12523,8 +12527,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 719729b20a1e8dc4dadd4f4040045d57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myFX: {fileID: 441983582}
-  clickFX: {fileID: 8300000, guid: ac5ffa49e676ddd428375d6cd6b54edd, type: 3}
+  clip: {fileID: 0}
+  loop: 0
+  volumeOffset: 0
+  channel: 0
 --- !u!114 &340868150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14263,8 +14269,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 719729b20a1e8dc4dadd4f4040045d57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myFX: {fileID: 1932939604}
-  clickFX: {fileID: 8300000, guid: ac5ffa49e676ddd428375d6cd6b54edd, type: 3}
+  clip: {fileID: 0}
+  loop: 0
+  volumeOffset: 0
+  channel: 0
 --- !u!1 &397448132
 GameObject:
   m_ObjectHideFlags: 0
@@ -15540,7 +15548,6 @@ GameObject:
   - component: {fileID: 441983578}
   - component: {fileID: 441983577}
   - component: {fileID: 441983583}
-  - component: {fileID: 441983582}
   - component: {fileID: 441983581}
   - component: {fileID: 441983584}
   m_Layer: 5
@@ -15732,8 +15739,8 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 441983583}
-          m_TargetAssemblyTypeName: BtnSFX, Assembly-CSharp
-          m_MethodName: ClickSound
+          m_TargetAssemblyTypeName: Audio.AudioPlayer, Assembly-CSharp
+          m_MethodName: PlayOneShot
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -15743,102 +15750,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!82 &441983582
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 441983575}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!114 &441983583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15851,8 +15762,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 719729b20a1e8dc4dadd4f4040045d57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myFX: {fileID: 441983582}
-  clickFX: {fileID: 8300000, guid: f8eb48a5051d2954ba27114cca162acd, type: 3}
+  clip: {fileID: 8300000, guid: f8eb48a5051d2954ba27114cca162acd, type: 3}
+  loop: 0
+  volumeOffset: 0
+  channel: 2
 --- !u!95 &441983584
 Animator:
   serializedVersion: 3
@@ -30094,8 +30007,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 719729b20a1e8dc4dadd4f4040045d57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myFX: {fileID: 1932939604}
-  clickFX: {fileID: 8300000, guid: ac5ffa49e676ddd428375d6cd6b54edd, type: 3}
+  clip: {fileID: 0}
+  loop: 0
+  volumeOffset: 0
+  channel: 0
 --- !u!114 &846478364
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30680,8 +30595,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 719729b20a1e8dc4dadd4f4040045d57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myFX: {fileID: 441983582}
-  clickFX: {fileID: 8300000, guid: ac5ffa49e676ddd428375d6cd6b54edd, type: 3}
+  clip: {fileID: 0}
+  loop: 0
+  volumeOffset: 0
+  channel: 0
 --- !u!114 &852550438
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37153,8 +37070,8 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1038290415}
-          m_TargetAssemblyTypeName: BtnSFX, Assembly-CSharp
-          m_MethodName: ClickSound
+          m_TargetAssemblyTypeName: Audio.AudioPlayer, Assembly-CSharp
+          m_MethodName: PlayOneShot
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -37176,8 +37093,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 719729b20a1e8dc4dadd4f4040045d57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myFX: {fileID: 1932939604}
-  clickFX: {fileID: 8300000, guid: ac5ffa49e676ddd428375d6cd6b54edd, type: 3}
+  clip: {fileID: 8300000, guid: ac5ffa49e676ddd428375d6cd6b54edd, type: 3}
+  loop: 0
+  volumeOffset: 0
+  channel: 2
 --- !u!1 &1042891565
 GameObject:
   m_ObjectHideFlags: 0
@@ -44855,8 +44774,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 719729b20a1e8dc4dadd4f4040045d57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myFX: {fileID: 1932939604}
-  clickFX: {fileID: 8300000, guid: ac5ffa49e676ddd428375d6cd6b54edd, type: 3}
+  clip: {fileID: 8300000, guid: ac5ffa49e676ddd428375d6cd6b54edd, type: 3}
+  loop: 0
+  volumeOffset: 0
+  channel: 2
 --- !u!114 &1275388859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44875,8 +44796,8 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1275388858}
-          m_TargetAssemblyTypeName: BtnSFX, Assembly-CSharp
-          m_MethodName: ClickSound
+          m_TargetAssemblyTypeName: Audio.AudioPlayer, Assembly-CSharp
+          m_MethodName: PlayOneShot
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -45538,8 +45459,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 719729b20a1e8dc4dadd4f4040045d57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myFX: {fileID: 1932939604}
-  clickFX: {fileID: 8300000, guid: ac5ffa49e676ddd428375d6cd6b54edd, type: 3}
+  clip: {fileID: 0}
+  loop: 0
+  volumeOffset: 0
+  channel: 0
 --- !u!114 &1290688057
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46411,7 +46334,6 @@ GameObject:
   - component: {fileID: 1329600870}
   - component: {fileID: 1329600869}
   - component: {fileID: 1329600868}
-  - component: {fileID: 1329600874}
   - component: {fileID: 1329600873}
   - component: {fileID: 1329600872}
   - component: {fileID: 1329600875}
@@ -46605,8 +46527,8 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1329600873}
-          m_TargetAssemblyTypeName: BtnSFX, Assembly-CSharp
-          m_MethodName: ClickSound
+          m_TargetAssemblyTypeName: Audio.AudioPlayer, Assembly-CSharp
+          m_MethodName: PlayOneShot
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -46628,104 +46550,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 719729b20a1e8dc4dadd4f4040045d57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myFX: {fileID: 1329600874}
-  clickFX: {fileID: 8300000, guid: f8eb48a5051d2954ba27114cca162acd, type: 3}
---- !u!82 &1329600874
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1329600866}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  clip: {fileID: 8300000, guid: f8eb48a5051d2954ba27114cca162acd, type: 3}
+  loop: 0
+  volumeOffset: 0
+  channel: 2
 --- !u!95 &1329600875
 Animator:
   serializedVersion: 3
@@ -53645,7 +53473,6 @@ GameObject:
   - component: {fileID: 1575659539}
   - component: {fileID: 1575659538}
   - component: {fileID: 1575659537}
-  - component: {fileID: 1575659543}
   - component: {fileID: 1575659542}
   - component: {fileID: 1575659541}
   - component: {fileID: 1575659544}
@@ -53832,8 +53659,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 719729b20a1e8dc4dadd4f4040045d57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myFX: {fileID: 1575659543}
-  clickFX: {fileID: 8300000, guid: f8eb48a5051d2954ba27114cca162acd, type: 3}
+  clip: {fileID: 8300000, guid: f8eb48a5051d2954ba27114cca162acd, type: 3}
+  loop: 0
+  volumeOffset: 0
+  channel: 2
 --- !u!114 &1575659542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53852,8 +53681,8 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1575659541}
-          m_TargetAssemblyTypeName: BtnSFX, Assembly-CSharp
-          m_MethodName: ClickSound
+          m_TargetAssemblyTypeName: Audio.AudioPlayer, Assembly-CSharp
+          m_MethodName: PlayOneShot
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -53863,102 +53692,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!82 &1575659543
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1575659535}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!95 &1575659544
 Animator:
   serializedVersion: 3
@@ -56003,8 +55736,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 719729b20a1e8dc4dadd4f4040045d57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myFX: {fileID: 1932939604}
-  clickFX: {fileID: 8300000, guid: ac5ffa49e676ddd428375d6cd6b54edd, type: 3}
+  clip: {fileID: 0}
+  loop: 0
+  volumeOffset: 0
+  channel: 0
 --- !u!114 &1633275939
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60850,8 +60585,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 719729b20a1e8dc4dadd4f4040045d57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myFX: {fileID: 441983582}
-  clickFX: {fileID: 8300000, guid: ac5ffa49e676ddd428375d6cd6b54edd, type: 3}
+  clip: {fileID: 0}
+  loop: 0
+  volumeOffset: 0
+  channel: 0
 --- !u!1 &1755957021
 GameObject:
   m_ObjectHideFlags: 0
@@ -65489,8 +65226,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 719729b20a1e8dc4dadd4f4040045d57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myFX: {fileID: 1932939604}
-  clickFX: {fileID: 8300000, guid: ac5ffa49e676ddd428375d6cd6b54edd, type: 3}
+  clip: {fileID: 0}
+  loop: 0
+  volumeOffset: 0
+  channel: 0
 --- !u!114 &1900638685
 MonoBehaviour:
   m_ObjectHideFlags: 0

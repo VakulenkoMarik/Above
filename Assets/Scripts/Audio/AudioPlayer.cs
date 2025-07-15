@@ -10,7 +10,7 @@ namespace Audio
         
         [Header("Settings")]
         [SerializeField] private bool loop;
-        [SerializeField, Range(0, 1)] private float volumeOffset;
+        [SerializeField, Range(-1, 1)] private float volumeOffset;
         [SerializeField] private AudioChannelType channel;
 
         private GlobalAudioSource Source => _source ??= Dependency.Get<GlobalAudioSource>();
