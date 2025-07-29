@@ -166,15 +166,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1281339093d4433428a90f16f37078e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemies:
-  - {fileID: 4508863570334650682, guid: 860a52cc830fbbd429c7a71332206820, type: 3}
-  - {fileID: 7970215843760892717, guid: e24578c5b44ec9b47bd51a540e2f2d1e, type: 3}
-  - {fileID: 5972989397014983799, guid: acd9839a57fd12c43997f4ede5813008, type: 3}
-  - {fileID: 4995921617682559222, guid: a7720de8b517c854289eecaf3bde3bf0, type: 3}
-  listOfKoefs: []
+  obstaclesList: {fileID: 11400000, guid: c53d4a6ac5541b14ea6c5d96e578d924, type: 2}
   deadLineForObstacles: {fileID: 1260428316}
-  distance: 0
-  isFirstSpawner: 0
+  heightOfNewObstaclesSpawn: 0
 --- !u!1 &30358575
 GameObject:
   m_ObjectHideFlags: 0
@@ -192,7 +186,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &30358576
 Transform:
@@ -383,7 +377,7 @@ GameObject:
   m_Component:
   - component: {fileID: 91905923}
   m_Layer: 0
-  m_Name: Fon6
+  m_Name: Ship
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -402,8 +396,8 @@ Transform:
   m_Children:
   - {fileID: 1375226527}
   - {fileID: 2144849622}
-  m_Father: {fileID: 519420032}
-  m_RootOrder: 11
+  m_Father: {fileID: 1698943085}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &101860666
 GameObject:
@@ -616,11 +610,11 @@ GameObject:
   m_Component:
   - component: {fileID: 148409062}
   m_Layer: 0
-  m_Name: Fon1 (2)
+  m_Name: Cage_Fon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 0
 --- !u!4 &148409062
 Transform:
@@ -907,7 +901,7 @@ GameObject:
   m_Component:
   - component: {fileID: 219013126}
   m_Layer: 0
-  m_Name: Fon2
+  m_Name: Forest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -920,14 +914,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 219013125}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 687071541}
   - {fileID: 10575113}
-  m_Father: {fileID: 519420032}
-  m_RootOrder: 7
+  m_Father: {fileID: 1698943085}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &219497544
 GameObject:
@@ -1078,7 +1072,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &248527230
 Transform:
@@ -1583,7 +1577,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &330850568
 Transform:
@@ -2393,7 +2387,7 @@ GameObject:
   m_Component:
   - component: {fileID: 450908719}
   m_Layer: 0
-  m_Name: Fon3
+  m_Name: Cage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2406,14 +2400,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 450908718}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 856874078}
   - {fileID: 1061140531}
-  m_Father: {fileID: 519420032}
-  m_RootOrder: 8
+  m_Father: {fileID: 1698943085}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &460867615
 GameObject:
@@ -2432,7 +2426,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &460867616
 Transform:
@@ -2547,7 +2541,7 @@ GameObject:
   m_Component:
   - component: {fileID: 471785073}
   m_Layer: 0
-  m_Name: Fon4
+  m_Name: Japan
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2560,14 +2554,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 471785072}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1631869150}
   - {fileID: 2044197646}
-  m_Father: {fileID: 519420032}
-  m_RootOrder: 9
+  m_Father: {fileID: 1698943085}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &506326042
 GameObject:
@@ -2835,12 +2829,7 @@ Transform:
   - {fileID: 1562461212}
   - {fileID: 841080704}
   - {fileID: 1143196300}
-  - {fileID: 901092211}
-  - {fileID: 219013126}
-  - {fileID: 450908719}
-  - {fileID: 471785073}
-  - {fileID: 1849597406}
-  - {fileID: 91905923}
+  - {fileID: 1698943085}
   - {fileID: 1901624678}
   - {fileID: 1260428316}
   m_Father: {fileID: 0}
@@ -3228,15 +3217,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1281339093d4433428a90f16f37078e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemies:
-  - {fileID: 8847025293357703843, guid: 4e075fe4fb067114db523b74dee76e7c, type: 3}
-  - {fileID: 1082073914568091951, guid: d2a636844ebf4b9478a120d55ec86548, type: 3}
-  - {fileID: 2995765279680493590, guid: 6e42c4c474bbced4f9c6a1b52eb9606e, type: 3}
-  - {fileID: 8546801664971482825, guid: e52c566820dff8b47b2b0039734e206d, type: 3}
-  listOfKoefs: []
+  obstaclesList: {fileID: 11400000, guid: d26b6507917ae844384a1c2078b26788, type: 2}
   deadLineForObstacles: {fileID: 1260428316}
-  distance: 0
-  isFirstSpawner: 1
+  heightOfNewObstaclesSpawn: 0
 --- !u!1 &534346044
 GameObject:
   m_ObjectHideFlags: 0
@@ -3414,15 +3397,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1281339093d4433428a90f16f37078e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemies:
-  - {fileID: 587746908385118161, guid: 74e5d19a887ce0b429aded22de6e0daf, type: 3}
-  - {fileID: 4335080262141000495, guid: 6c216c7d8496a504ab707fe7643982d7, type: 3}
-  - {fileID: 8327797648895949824, guid: 6b264544432af4044b33434272c15914, type: 3}
-  - {fileID: 2556796111684622148, guid: 17d11756be98b364d900b1eca4b982ed, type: 3}
-  listOfKoefs: []
+  obstaclesList: {fileID: 11400000, guid: 1cdad1c2578d3784bb2e02439e6072a9, type: 2}
   deadLineForObstacles: {fileID: 1260428316}
-  distance: 0
-  isFirstSpawner: 0
+  heightOfNewObstaclesSpawn: 0
 --- !u!1 &536858597
 GameObject:
   m_ObjectHideFlags: 0
@@ -4245,15 +4222,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1281339093d4433428a90f16f37078e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemies:
-  - {fileID: 360334485067421535, guid: cf451a6480df8e04a9a588abde03b503, type: 3}
-  - {fileID: 759236936746771160, guid: 18566eca56102d24a9fc906332833060, type: 3}
-  - {fileID: 5199403076211087849, guid: a48780e0252c39c4fbc859e658ae117e, type: 3}
-  - {fileID: 4450220009733186916, guid: 55c3a257f7805f041aaa802e70b2aec2, type: 3}
-  listOfKoefs: []
+  obstaclesList: {fileID: 11400000, guid: 8d2d4a130dbe1554c97cdfe0ee6d0901, type: 2}
   deadLineForObstacles: {fileID: 1260428316}
-  distance: 0
-  isFirstSpawner: 1
+  heightOfNewObstaclesSpawn: 0
 --- !u!1 &728170635
 GameObject:
   m_ObjectHideFlags: 0
@@ -5134,11 +5105,11 @@ GameObject:
   m_Component:
   - component: {fileID: 853283255}
   m_Layer: 0
-  m_Name: Fon1
+  m_Name: Street_Fon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 0
 --- !u!4 &853283255
 Transform:
@@ -5202,15 +5173,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1281339093d4433428a90f16f37078e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemies:
-  - {fileID: 4154088295708818036, guid: 59c6789543130c64b980e5c3927ee4ef, type: 3}
-  - {fileID: 5314766935019172881, guid: b5f9c12a21d6aff468847f29a2e05612, type: 3}
-  - {fileID: 8301896980667265982, guid: 7434a1725b7c61745abc6ea3c0d80e80, type: 3}
-  - {fileID: 1111777086933739004, guid: f8cf4994deaf5254e8707748f3504198, type: 3}
-  listOfKoefs: []
+  obstaclesList: {fileID: 11400000, guid: 22b14c7c874d86a4784d4cbadb2761dd, type: 2}
   deadLineForObstacles: {fileID: 1260428316}
-  distance: 0
-  isFirstSpawner: 1
+  heightOfNewObstaclesSpawn: 0
 --- !u!1 &858801808
 GameObject:
   m_ObjectHideFlags: 0
@@ -5221,11 +5186,11 @@ GameObject:
   m_Component:
   - component: {fileID: 858801809}
   m_Layer: 0
-  m_Name: Fon1 (5)
+  m_Name: Ship_Fon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 0
 --- !u!4 &858801809
 Transform:
@@ -5538,7 +5503,7 @@ GameObject:
   m_Component:
   - component: {fileID: 901092211}
   m_Layer: 0
-  m_Name: Fon1
+  m_Name: Street
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5551,14 +5516,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 901092210}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1106430830}
   - {fileID: 1473674056}
-  m_Father: {fileID: 519420032}
-  m_RootOrder: 6
+  m_Father: {fileID: 1698943085}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &904065978
 GameObject:
@@ -6188,7 +6153,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &983957626
 Transform:
@@ -7085,15 +7050,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1281339093d4433428a90f16f37078e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemies:
-  - {fileID: 6503716855193370546, guid: 42ea6bfff3052b940a1fa146f8b1e9c4, type: 3}
-  - {fileID: 3484716776880755040, guid: 2823ef87332261c4c98986940fada860, type: 3}
-  - {fileID: 2735754356271837126, guid: 569d247ad0a40ea4ba088b491dfe1be6, type: 3}
-  - {fileID: 1061769754003541729, guid: dd444344f32bf324e9fb83f4157f250b, type: 3}
-  listOfKoefs: []
+  obstaclesList: {fileID: 11400000, guid: c82fc9b8ed3c58e4b87c58f86f744c60, type: 2}
   deadLineForObstacles: {fileID: 1260428316}
-  distance: 0
-  isFirstSpawner: 0
+  heightOfNewObstaclesSpawn: 0
 --- !u!1 &1076384024
 GameObject:
   m_ObjectHideFlags: 0
@@ -7368,15 +7327,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1281339093d4433428a90f16f37078e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemies:
-  - {fileID: 7221275972052034100, guid: 152bf6bd80934f84580cd7c41e43c13b, type: 3}
-  - {fileID: 2278741825720580269, guid: de96b47704a172b44a32b91ca4ff4383, type: 3}
-  - {fileID: 2625409659405930893, guid: 98eab04802877e9458067931ee8ed8a0, type: 3}
-  - {fileID: 3677738387596580392, guid: aedea8e02dde69f4f9013d5889c880d9, type: 3}
-  listOfKoefs: []
+  obstaclesList: {fileID: 11400000, guid: 3d71bca554a72b04989af53b6716f4b9, type: 2}
   deadLineForObstacles: {fileID: 1260428316}
-  distance: 0
-  isFirstSpawner: 1
+  heightOfNewObstaclesSpawn: 0
 --- !u!4 &1106430830
 Transform:
   m_ObjectHideFlags: 0
@@ -7644,7 +7597,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1145186454
 Transform:
@@ -7915,11 +7868,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1188949333}
   m_Layer: 0
-  m_Name: Fon1 (1)
+  m_Name: Forest_Fon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 0
 --- !u!4 &1188949333
 Transform:
@@ -8513,7 +8466,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 519420032}
-  m_RootOrder: 13
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1263670175
 GameObject:
@@ -8746,7 +8699,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1329351430
 Transform:
@@ -9038,7 +8991,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1353911816
 Transform:
@@ -9370,15 +9323,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1281339093d4433428a90f16f37078e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemies:
-  - {fileID: 2897956538049459191, guid: a10125011b4bd354ebcff0ddebb93a3a, type: 3}
-  - {fileID: 74331713961932261, guid: 79e5071d68659124b923a80a568560ec, type: 3}
-  - {fileID: 7310655433261933811, guid: 4ad57973a7945e44f8c9b2eade726f6f, type: 3}
-  - {fileID: 7490127301535164483, guid: af8043a4dcb495b42a8c14118a690425, type: 3}
-  listOfKoefs: []
+  obstaclesList: {fileID: 11400000, guid: 38ca8f63020928743b68f34293386fd4, type: 2}
   deadLineForObstacles: {fileID: 1260428316}
-  distance: 0
-  isFirstSpawner: 1
+  heightOfNewObstaclesSpawn: 0
 --- !u!1 &1382160800
 GameObject:
   m_ObjectHideFlags: 0
@@ -9661,11 +9608,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1462038751}
   m_Layer: 0
-  m_Name: Fon1 (4)
+  m_Name: Desert_Fon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 0
 --- !u!4 &1462038751
 Transform:
@@ -9715,15 +9662,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1281339093d4433428a90f16f37078e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemies:
-  - {fileID: 4939562088805895318, guid: a4cad5ad9b288c94196e1ba2841254e2, type: 3}
-  - {fileID: 5250396775020985620, guid: 715e02ecd72e1a04092ab6b14300e95b, type: 3}
-  - {fileID: 2625409659405930893, guid: 98eab04802877e9458067931ee8ed8a0, type: 3}
-  - {fileID: 2775779476811573806, guid: 4a8b154d076bb7243aa22e7cb94e8f5d, type: 3}
-  listOfKoefs: []
+  obstaclesList: {fileID: 11400000, guid: 9801286ae226f8a42b0f83309598992a, type: 2}
   deadLineForObstacles: {fileID: 1260428316}
-  distance: 0
-  isFirstSpawner: 0
+  heightOfNewObstaclesSpawn: 0
 --- !u!4 &1473674056
 Transform:
   m_ObjectHideFlags: 0
@@ -10171,11 +10112,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1608159892}
   m_Layer: 0
-  m_Name: Fon1 (3)
+  m_Name: Japan_Fon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 0
 --- !u!4 &1608159892
 Transform:
@@ -10239,15 +10180,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1281339093d4433428a90f16f37078e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemies:
-  - {fileID: 1860134640848184264, guid: 9cdf158bb39f1b545b15571d6f3e5bfd, type: 3}
-  - {fileID: 8988635473442305623, guid: 2a1c323167146954c95500f09098fda7, type: 3}
-  - {fileID: 275177155207104446, guid: 11e8198f2b385b14ca05b19e3335007c, type: 3}
-  - {fileID: 7055265806703408228, guid: da18a643a93081a45a976c0e2045fd3e, type: 3}
-  listOfKoefs: []
+  obstaclesList: {fileID: 11400000, guid: bd1b5e76ffd6854418153d64c9b8ade8, type: 2}
   deadLineForObstacles: {fileID: 1260428316}
-  distance: 0
-  isFirstSpawner: 1
+  heightOfNewObstaclesSpawn: 0
 --- !u!1 &1653532795
 GameObject:
   m_ObjectHideFlags: 0
@@ -10635,6 +10570,42 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1680659651}
   m_CullTransparentMesh: 1
+--- !u!1 &1698943084
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1698943085}
+  m_Layer: 0
+  m_Name: ObstaclesGeneration
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1698943085
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1698943084}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 901092211}
+  - {fileID: 219013126}
+  - {fileID: 450908719}
+  - {fileID: 471785073}
+  - {fileID: 1849597406}
+  - {fileID: 91905923}
+  m_Father: {fileID: 519420032}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1698974956
 GameObject:
   m_ObjectHideFlags: 0
@@ -10803,7 +10774,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1703171356
 Transform:
@@ -11474,7 +11445,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1826362827
 Transform:
@@ -11589,7 +11560,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1849597406}
   m_Layer: 0
-  m_Name: Fon5
+  m_Name: Desert
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11602,14 +11573,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1849597405}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 533507294}
   - {fileID: 534401975}
-  m_Father: {fileID: 519420032}
-  m_RootOrder: 10
+  m_Father: {fileID: 1698943085}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1901624677
 GameObject:
@@ -11643,7 +11614,7 @@ RectTransform:
   m_Children:
   - {fileID: 2019444161}
   m_Father: {fileID: 519420032}
-  m_RootOrder: 12
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -12156,7 +12127,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1987830685
 Transform:
@@ -12687,7 +12658,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &2030647482
 Transform:
@@ -12911,15 +12882,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1281339093d4433428a90f16f37078e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemies:
-  - {fileID: 7013638232466221003, guid: bc42660ba80f8334ea03c52f97dfe61b, type: 3}
-  - {fileID: 4031549556666119777, guid: eea21ec51a371894baa3c26a021d29db, type: 3}
-  - {fileID: 5561906124041078740, guid: 771296e475a2d5a48b4bebbf148675f2, type: 3}
-  - {fileID: 7341912656544496277, guid: f80d196089c239944b1dd7949d619a65, type: 3}
-  listOfKoefs: []
+  obstaclesList: {fileID: 11400000, guid: 8b9f097867caf784182e33835b6d8eea, type: 2}
   deadLineForObstacles: {fileID: 1260428316}
-  distance: 0
-  isFirstSpawner: 0
+  heightOfNewObstaclesSpawn: 0
 --- !u!1 &2055191059
 GameObject:
   m_ObjectHideFlags: 0
@@ -13358,15 +13323,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1281339093d4433428a90f16f37078e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemies:
-  - {fileID: 8587525198079110080, guid: 30bfff03be251114b8c19f2fd629c117, type: 3}
-  - {fileID: 6800091752417666115, guid: 02fac17006ef4874b90486f875ad1312, type: 3}
-  - {fileID: 3664882417580669987, guid: a7ab34b6e0c75fd4a938170312bd66d8, type: 3}
-  - {fileID: 3701007095229606261, guid: 2cf89ff26ff78d443a53d61d3636a30b, type: 3}
-  listOfKoefs: []
+  obstaclesList: {fileID: 11400000, guid: 7c648a88723a95b4882d8b68f5b90c78, type: 2}
   deadLineForObstacles: {fileID: 1260428316}
-  distance: 0
-  isFirstSpawner: 0
+  heightOfNewObstaclesSpawn: 0
 --- !u!1001 &149187188912607027
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13377,6 +13336,10 @@ PrefabInstance:
     - target: {fileID: 5010482633693853541, guid: 36241bb287d872148aed7e5c30163809, type: 3}
       propertyPath: m_Name
       value: FonAbove2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5010482633693853541, guid: 36241bb287d872148aed7e5c30163809, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 5722783765366727642, guid: 36241bb287d872148aed7e5c30163809, type: 3}
       propertyPath: m_RootOrder
@@ -13483,6 +13446,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5191257208676830286, guid: 964fe6624077f8b43912a1eb488c3fbd, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 9216146129911148123, guid: 964fe6624077f8b43912a1eb488c3fbd, type: 3}
       propertyPath: m_SortingOrder
       value: -15
@@ -13499,6 +13466,10 @@ PrefabInstance:
     - target: {fileID: 7414336397114037735, guid: 70832e3869f825748840cfcff98f7154, type: 3}
       propertyPath: m_Name
       value: FonAbove2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7414336397114037735, guid: 70832e3869f825748840cfcff98f7154, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 7784090702679425368, guid: 70832e3869f825748840cfcff98f7154, type: 3}
       propertyPath: m_RootOrder
@@ -13556,6 +13527,10 @@ PrefabInstance:
     - target: {fileID: 1153212238717153654, guid: 23bbbfc4bf7941b43a2d09abc97f4518, type: 3}
       propertyPath: m_Name
       value: FonAbove2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1153212238717153654, guid: 23bbbfc4bf7941b43a2d09abc97f4518, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 1937302657803085257, guid: 23bbbfc4bf7941b43a2d09abc97f4518, type: 3}
       propertyPath: m_RootOrder
@@ -13663,6 +13638,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FonAbove2
       objectReference: {fileID: 0}
+    - target: {fileID: 3135390771340274543, guid: 95478ceab489468488c3700730aa233e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 95478ceab489468488c3700730aa233e, type: 3}
 --- !u!4 &5582613569580739817 stripped
@@ -13690,6 +13669,10 @@ PrefabInstance:
     - target: {fileID: 2368267592465341513, guid: 9f5f3d26ab4454b4388ea598850e0288, type: 3}
       propertyPath: m_Name
       value: FonAbove2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2368267592465341513, guid: 9f5f3d26ab4454b4388ea598850e0288, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 3043976195783575798, guid: 9f5f3d26ab4454b4388ea598850e0288, type: 3}
       propertyPath: m_RootOrder

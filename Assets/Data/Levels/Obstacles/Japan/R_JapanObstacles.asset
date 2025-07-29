@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a70dedaec7240748ffd1bb6b1fc8d6c, type: 3}
+  m_Name: R_JapanObstacles
+  m_EditorClassIdentifier: 
+  obstacles:
+  - {fileID: 7013638232466221003, guid: bc42660ba80f8334ea03c52f97dfe61b, type: 3}
+  - {fileID: 5561906124041078740, guid: 771296e475a2d5a48b4bebbf148675f2, type: 3}
+  - {fileID: 7341912656544496277, guid: f80d196089c239944b1dd7949d619a65, type: 3}
+  - {fileID: 4031549556666119777, guid: eea21ec51a371894baa3c26a021d29db, type: 3}

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a70dedaec7240748ffd1bb6b1fc8d6c, type: 3}
+  m_Name: L_CageObstacles
+  m_EditorClassIdentifier: 
+  obstacles:
+  - {fileID: 5314766935019172881, guid: b5f9c12a21d6aff468847f29a2e05612, type: 3}
+  - {fileID: 8301896980667265982, guid: 7434a1725b7c61745abc6ea3c0d80e80, type: 3}
+  - {fileID: 1111777086933739004, guid: f8cf4994deaf5254e8707748f3504198, type: 3}
+  - {fileID: 4154088295708818036, guid: 59c6789543130c64b980e5c3927ee4ef, type: 3}
