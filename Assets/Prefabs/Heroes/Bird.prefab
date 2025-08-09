@@ -194,6 +194,11 @@ GameObject:
   m_Component:
   - component: {fileID: 3782239465964917476}
   - component: {fileID: 3782239465964917478}
+  - component: {fileID: 7317880230591951175}
+  - component: {fileID: 576377164538503678}
+  - component: {fileID: 2577736949729622127}
+  - component: {fileID: 6310244941451267146}
+  - component: {fileID: 399043896729455876}
   m_Layer: 0
   m_Name: Bird
   m_TagString: Untagged
@@ -210,7 +215,7 @@ Transform:
   m_GameObject: {fileID: 3782239465964917474}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children:
   - {fileID: 9204537643386354803}
   - {fileID: 8554424833220475889}
@@ -233,3 +238,102 @@ CircleCollider2D:
   m_Offset: {x: 0, y: -0.5}
   serializedVersion: 2
   m_Radius: 1.5
+--- !u!114 &7317880230591951175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3782239465964917474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ddf0edcd9094d7dae353bc6f7658313, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  disableColliderOnDeath: 1
+--- !u!114 &576377164538503678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3782239465964917474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3255eb42fa464fa5b5a453e0bdb8f560, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2577736949729622127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3782239465964917474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74bea2aedb8e4e78b1220596b5fe2554, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6310244941451267146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3782239465964917474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f69eb74e644e4d5088865adbead4201e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Index>k__BackingField: 0
+  onDeath:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 399043896729455876}
+        m_TargetAssemblyTypeName: Audio.AudioPlayer, Assembly-CSharp
+        m_MethodName: PlayOneShot
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 9d68c255262d20544890f1695e3d95c6, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onJump:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 399043896729455876}
+        m_TargetAssemblyTypeName: Audio.AudioPlayer, Assembly-CSharp
+        m_MethodName: PlayOneShot
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 2a237e4aaabd53d439cb9f2a3c5e7998, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onCoinCollected:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &399043896729455876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3782239465964917474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 719729b20a1e8dc4dadd4f4040045d57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clip: {fileID: 0}
+  loop: 0
+  volumeOffset: 0
+  channel: 0
