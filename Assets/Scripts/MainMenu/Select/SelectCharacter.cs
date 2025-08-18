@@ -1,4 +1,6 @@
+using DependencyControl;
 using Encrypting;
+using Firebase.DataControl;
 using Firebase.Storage;
 using UnityEngine;
 
@@ -15,7 +17,7 @@ namespace MainMenu.Select
 
         void Start()
         {
-            i = JsonStorage.instance.data.currentShop.currentSkin;
+            i = Dependency.Get<JsonStorage>().data.currentShop.currentSkin;
 
             EquipedButtons[i].SetActive(true);
             EquipButtons[i].SetActive(false);
@@ -32,9 +34,9 @@ namespace MainMenu.Select
                 EquipButtons[i].SetActive(true);
             }
 
-            JsonStorage.instance.data.currentShop.currentSkin = thisCharacter;
+            Dependency.Get<JsonStorage>().data.currentShop.currentSkin = thisCharacter;
 
-            CryptoHelper.Encrypt(JsonStorage.instance.data, JsonStorage.instance.password);
+            CryptoHelper.Encrypt(Dependency.Get<JsonStorage>().data, Dependency.Get<JsonStorage>().password);
 
             AllCharacters[thisCharacter].SetActive(true);
 

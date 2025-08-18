@@ -1,7 +1,10 @@
 using System;
 using System.Collections;
+using DependencyControl;
 using Encrypting;
+using Firebase.DataControl;
 using Firebase.Storage;
+using Game;
 using Hero;
 using TMPro;
 using UnityEngine;
@@ -50,10 +53,10 @@ namespace Shop
 
             CoinsManagerInMainMenu.instance.coinsF += 10;
 
-            JsonStorage.instance.data.userData.coinsF = CoinsManagerInMainMenu.instance.coinsF;
-            JsonStorage.instance.data.userData.coinsFAllTime += 10;
+            Dependency.Get<JsonStorage>().data.userData.coinsF = CoinsManagerInMainMenu.instance.coinsF;
+            Dependency.Get<JsonStorage>().data.userData.coinsFAllTime += 10;
 
-            CryptoHelper.Encrypt(JsonStorage.instance.data, JsonStorage.instance.password);
+            CryptoHelper.Encrypt(Dependency.Get<JsonStorage>().data, Dependency.Get<JsonStorage>().password);
         
             CoinsManagerInMainMenu.instance.UpdateUI();
         }

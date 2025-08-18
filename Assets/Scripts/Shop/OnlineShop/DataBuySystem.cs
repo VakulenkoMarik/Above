@@ -1,5 +1,8 @@
+using DependencyControl;
 using Encrypting;
+using Firebase.DataControl;
 using Firebase.Storage;
+using Game;
 using Hero;
 using Other;
 using UnityEngine;
@@ -30,7 +33,7 @@ namespace Shop.OnlineShop
         {
             if (purchaseType == Think.Skin)
             {
-                bool isBought = JsonStorage.instance.data.purchasedItems.skins.Contains(purchaseName);
+                bool isBought = Dependency.Get<JsonStorage>().data.purchasedItems.skins.Contains(purchaseName);
 
                 if (isBought == true)
                 {
@@ -39,7 +42,7 @@ namespace Shop.OnlineShop
             }
             if (purchaseType == Think.Bg)
             {
-                bool isBought = JsonStorage.instance.data.purchasedItems.bgs.Contains(purchaseName);
+                bool isBought = Dependency.Get<JsonStorage>().data.purchasedItems.bgs.Contains(purchaseName);
 
                 if (isBought == true)
                 {
@@ -48,7 +51,7 @@ namespace Shop.OnlineShop
             }
             if (purchaseType == Think.Boost)
             {
-                bool isBought = JsonStorage.instance.data.purchasedItems.boosts.Contains(purchaseName);
+                bool isBought = Dependency.Get<JsonStorage>().data.purchasedItems.boosts.Contains(purchaseName);
 
                 if (isBought == true)
                 {
@@ -65,15 +68,15 @@ namespace Shop.OnlineShop
                 {
                     if (purchaseType == Think.Skin)
                     {
-                        JsonStorage.instance.data.purchasedItems.skins.Add(purchaseName);
+                        Dependency.Get<JsonStorage>().data.purchasedItems.skins.Add(purchaseName);
                     }
                     else if (purchaseType == Think.Bg)
                     {
-                        JsonStorage.instance.data.purchasedItems.bgs.Add(purchaseName);
+                        Dependency.Get<JsonStorage>().data.purchasedItems.bgs.Add(purchaseName);
                     }
                     else if (purchaseType == Think.Boost)
                     {
-                        JsonStorage.instance.data.purchasedItems.boosts.Add(purchaseName);
+                        Dependency.Get<JsonStorage>().data.purchasedItems.boosts.Add(purchaseName);
                     }
 
                     if (GetComponent<AccIconsUnlockManager>())
@@ -84,9 +87,9 @@ namespace Shop.OnlineShop
                     gameObject.SetActive(false);
 
                     CoinsManagerInMainMenu.instance.coinsF -= price;
-                    JsonStorage.instance.data.userData.coinsF = CoinsManagerInMainMenu.instance.coinsF;
+                    Dependency.Get<JsonStorage>().data.userData.coinsF = CoinsManagerInMainMenu.instance.coinsF;
 
-                    CryptoHelper.Encrypt(JsonStorage.instance.data, JsonStorage.instance.password);
+                    CryptoHelper.Encrypt(Dependency.Get<JsonStorage>().data, Dependency.Get<JsonStorage>().password);
 
                     CoinsManagerInMainMenu.instance.UpdateUI();
                 }
@@ -97,15 +100,15 @@ namespace Shop.OnlineShop
                 {
                     if (purchaseType == Think.Skin)
                     {
-                        JsonStorage.instance.data.purchasedItems.skins.Add(purchaseName);
+                        Dependency.Get<JsonStorage>().data.purchasedItems.skins.Add(purchaseName);
                     }
                     else if (purchaseType == Think.Bg)
                     {
-                        JsonStorage.instance.data.purchasedItems.bgs.Add(purchaseName);
+                        Dependency.Get<JsonStorage>().data.purchasedItems.bgs.Add(purchaseName);
                     }
                     else if (purchaseType == Think.Boost)
                     {
-                        JsonStorage.instance.data.purchasedItems.boosts.Add(purchaseName);
+                        Dependency.Get<JsonStorage>().data.purchasedItems.boosts.Add(purchaseName);
                     }
 
                     if (GetComponent<AccIconsUnlockManager>())
@@ -116,9 +119,9 @@ namespace Shop.OnlineShop
                     gameObject.SetActive(false);
 
                     CoinsManagerInMainMenu.instance.coinsS -= price;
-                    JsonStorage.instance.data.userData.coinsS = CoinsManagerInMainMenu.instance.coinsS;
+                    Dependency.Get<JsonStorage>().data.userData.coinsS = CoinsManagerInMainMenu.instance.coinsS;
 
-                    CryptoHelper.Encrypt(JsonStorage.instance.data, JsonStorage.instance.password);
+                    CryptoHelper.Encrypt(Dependency.Get<JsonStorage>().data, Dependency.Get<JsonStorage>().password);
                 
                     CoinsManagerInMainMenu.instance.UpdateUI();
                 }

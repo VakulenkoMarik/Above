@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Threading.Tasks;
+using DependencyControl;
 using Encrypting;
+using Firebase.DataControl;
 using Firebase.Storage;
 using Game;
 using UnityEngine;
@@ -37,18 +39,17 @@ namespace Hero
 
         void Start()
         {
-            StartOnClick.instance.player = this;
             CoinSpawner.instance.hero = gameObject;
 
             rb = GetComponent<Rigidbody2D>();
             anim = GetComponent<Animator>();
             cameraFollow = Camera.main.GetComponent<CameraFollow>();
 
-            audioSource.volume = JsonStorage.instance.data.audioSettings.sfxGame;
+            audioSource.volume = Dependency.Get<JsonStorage>().data.audioSettings.sfxGame;
         
-            hp = JsonStorage.instance.data.currentShop.currentBoost == 3 ? 1 : 0;
-            speed = JsonStorage.instance.data.currentShop.currentBoost == 2 ? 1.5f : 2.2f;
-            coinsToAdd = JsonStorage.instance.data.currentShop.currentBoost == 1 ? 2 : 1;
+            hp = Dependency.Get<JsonStorage>().data.currentShop.currentBoost == 3 ? 1 : 0;
+            speed = Dependency.Get<JsonStorage>().data.currentShop.currentBoost == 2 ? 1.5f : 2.2f;
+            coinsToAdd = Dependency.Get<JsonStorage>().data.currentShop.currentBoost == 1 ? 2 : 1;
 
             PauseController.instance.Hero = gameObject;
 
@@ -99,11 +100,11 @@ namespace Hero
                 StartCoroutine(TouchCoin(collision.gameObject, true));
 
                 CoinsManager.instance.coinsF += coinsToAdd;
-                JsonStorage.instance.data.userData.coinsF = CoinsManager.instance.coinsF;
+                Dependency.Get<JsonStorage>().data.userData.coinsF = CoinsManager.instance.coinsF;
 
-                JsonStorage.instance.data.userData.coinsFAllTime += coinsToAdd;
+                Dependency.Get<JsonStorage>().data.userData.coinsFAllTime += coinsToAdd;
 
-                CryptoHelper.Encrypt(JsonStorage.instance.data, JsonStorage.instance.password);
+                CryptoHelper.Encrypt(Dependency.Get<JsonStorage>().data, Dependency.Get<JsonStorage>().password);
 
                 audioSource.PlayOneShot(getCoin);
 
@@ -115,11 +116,11 @@ namespace Hero
                 StartCoroutine(TouchCoin(collision.gameObject, false));
 
                 CoinsManager.instance.coinsS++;
-                JsonStorage.instance.data.userData.coinsS = CoinsManager.instance.coinsS;
+                Dependency.Get<JsonStorage>().data.userData.coinsS = CoinsManager.instance.coinsS;
 
-                JsonStorage.instance.data.userData.coinsSAllTime++;
+                Dependency.Get<JsonStorage>().data.userData.coinsSAllTime++;
 
-                CryptoHelper.Encrypt(JsonStorage.instance.data, JsonStorage.instance.password);
+                CryptoHelper.Encrypt(Dependency.Get<JsonStorage>().data, Dependency.Get<JsonStorage>().password);
             
                 audioSource.PlayOneShot(getCoin);
 
@@ -193,7 +194,7 @@ namespace Hero
         {
             canvasInGame.SetActive(false);
         
-            if (JsonStorage.instance.data.otherSettings.vibration)
+            if (Dependency.Get<JsonStorage>().data.otherSettings.vibration)
             {
                 Handheld.Vibrate();
                 Debug.Log("Vibration");
@@ -209,7 +210,7 @@ namespace Hero
 
             await Task.Delay(TimeSpan.FromSeconds(0.05f));
 
-            if (JsonStorage.instance.data.otherSettings.cameraShake)
+            if (Dependency.Get<JsonStorage>().data.otherSettings.cameraShake)
             {
                 for (int i = 0; i < 10; i++)
                 {
@@ -231,7 +232,7 @@ namespace Hero
             await Task.Delay(TimeSpan.FromSeconds(0.45f));
 
             deathPanel.SetActive(true);
-            LosePanel.instance.Death(int.Parse(Score.instance.scoreText.text));
+            //LosePanel.instance.Death(int.Parse(Score.instance.scoreText.text));
         }
 
     

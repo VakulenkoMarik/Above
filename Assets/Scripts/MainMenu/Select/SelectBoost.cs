@@ -1,4 +1,6 @@
+using DependencyControl;
 using Encrypting;
+using Firebase.DataControl;
 using Firebase.Storage;
 using UnityEngine;
 
@@ -19,7 +21,7 @@ namespace MainMenu.Select
 
         void Start()
         {
-            if (JsonStorage.instance.data.currentShop.currentBoost == 3)
+            if (Dependency.Get<JsonStorage>().data.currentShop.currentBoost == 3)
             {
                 foreach (GameObject hero in Heroes)
                 {
@@ -34,7 +36,7 @@ namespace MainMenu.Select
                 }
             }
 
-            currentBoost = JsonStorage.instance.data.currentShop.currentBoost;
+            currentBoost = Dependency.Get<JsonStorage>().data.currentShop.currentBoost;
 
             EquipedButtons[currentBoost].SetActive(true);
             EquipButtons[currentBoost].SetActive(false);
@@ -66,9 +68,9 @@ namespace MainMenu.Select
                 }
             }
 
-            JsonStorage.instance.data.currentShop.currentBoost = thisBoost;
+            Dependency.Get<JsonStorage>().data.currentShop.currentBoost = thisBoost;
 
-            CryptoHelper.Encrypt(JsonStorage.instance.data, JsonStorage.instance.password);
+            CryptoHelper.Encrypt(Dependency.Get<JsonStorage>().data, Dependency.Get<JsonStorage>().password);
 
             AllBoosts[thisBoost].SetActive(true);
 

@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using DependencyControl;
 using Encrypting;
+using Firebase.DataControl;
 using Firebase.Storage;
 using MainMenu.Select;
 using UnityEngine;
@@ -29,7 +31,7 @@ namespace MainMenu
 
         public void Change(string name, Image button)
         {
-            JsonStorage.instance.data.userData.userIcon = name;
+            Dependency.Get<JsonStorage>().data.userData.userIcon = name;
 
             foreach (SelectAccIcon select in equipButtonsList)
             {
@@ -44,7 +46,7 @@ namespace MainMenu
 
             accountManagerMainMenu.ChangeIcon(name);
 
-            CryptoHelper.Encrypt(JsonStorage.instance.data, JsonStorage.instance.password);
+            CryptoHelper.Encrypt(Dependency.Get<JsonStorage>().data, Dependency.Get<JsonStorage>().password);
         }
     }
 }

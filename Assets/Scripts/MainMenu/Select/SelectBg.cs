@@ -1,6 +1,9 @@
 using System.Collections;
+using DependencyControl;
 using Encrypting;
+using Firebase.DataControl;
 using Firebase.Storage;
+using Other;
 using UnityEngine;
 
 namespace MainMenu.Select
@@ -17,7 +20,7 @@ namespace MainMenu.Select
 
         void Start()
         {
-            i = JsonStorage.instance.data.currentShop.currentBg;
+            i = Dependency.Get<JsonStorage>().data.currentShop.currentBg;
 
             EquipedButtons[i].SetActive(true);
             EquipButtons[i].SetActive(false);
@@ -32,7 +35,7 @@ namespace MainMenu.Select
         {
             yield return new WaitForSeconds(1);
 
-            GameManager.instance.SetActiveLoadingScreen(false);
+            Dependency.Get<LoadingScreenActivator>().SetActiveLoadingScreen(false);
         }
 
         public void Change(int thisBg)
@@ -46,9 +49,9 @@ namespace MainMenu.Select
                 EquipButtons[i].SetActive(true);
             }
 
-            JsonStorage.instance.data.currentShop.currentBg = thisBg;
+            Dependency.Get<JsonStorage>().data.currentShop.currentBg = thisBg;
         
-            CryptoHelper.Encrypt(JsonStorage.instance.data, JsonStorage.instance.password);
+            CryptoHelper.Encrypt(Dependency.Get<JsonStorage>().data, Dependency.Get<JsonStorage>().password);
 
             AllBg[thisBg].SetActive(true);
             AllRailings[thisBg].SetActive(true);

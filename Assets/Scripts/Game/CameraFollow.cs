@@ -1,3 +1,5 @@
+using DependencyControl;
+using Firebase.DataControl;
 using Firebase.Storage;
 using UnityEngine;
 using WifiControl;
@@ -16,7 +18,7 @@ namespace Game
         
             if (isTutorial) return;
 
-            if (!JsonStorage.instance.data.otherSettings.showSelectedBoostInGame)
+            if (!Dependency.Get<JsonStorage>().data.otherSettings.showSelectedBoostInGame)
             {
                 boost.SetActive(false);
             }

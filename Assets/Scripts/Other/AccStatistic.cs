@@ -1,5 +1,6 @@
 using System;
-using Firebase.Data;
+using DependencyControl;
+using Firebase.DataControl;
 using Firebase.Storage;
 using TMPro;
 using UnityEngine;
@@ -24,17 +25,20 @@ namespace Other
 
         [Header ("## Other resources : ")]
         [SerializeField] private Image icon;
+        
+        private StorageData StorageData => _storageData ??= Dependency.Get<StorageData>();
+        private StorageData _storageData;
 
         public void OpenStatistic()
         {
             userIcon.sprite = icon.sprite;
 
-            flyCoinsAllTime.text = JsonStorage.instance.data.userData.coinsFAllTime + "";
-            superCoinsAllTime.text = JsonStorage.instance.data.userData.coinsSAllTime + "";
-            hightScore.text = JsonStorage.instance.data.userData.record + "";
-            level.text = JsonStorage.instance.data.userData.level + "";
+            flyCoinsAllTime.text = Dependency.Get<JsonStorage>().data.userData.coinsFAllTime + "";
+            superCoinsAllTime.text = Dependency.Get<JsonStorage>().data.userData.coinsSAllTime + "";
+            hightScore.text = Dependency.Get<JsonStorage>().data.userData.record + "";
+            level.text = Dependency.Get<JsonStorage>().data.userData.level + "";
 
-            ulong creationTimestamp = UserData.instance.metadata.CreationTimestamp;
+            ulong creationTimestamp = StorageData.GetAuth().CurrentUser.Metadata.CreationTimestamp;
             long signedTimestamp = (long)creationTimestamp;
 
             DateTime creationDateTime = DateTimeOffset.FromUnixTimeMilliseconds(signedTimestamp).DateTime;
@@ -42,8 +46,8 @@ namespace Other
 
             createdAccount.text = formattedDate;
 
-            userName.text = UserData.instance.User.DisplayName;
-            userEmail.text = UserData.instance.User.Email;
+            userName.text = StorageData.GetAuth().CurrentUser.DisplayName;
+            userEmail.text = StorageData.GetAuth().CurrentUser.Email;
 
             panel.SetActive(true);
         }

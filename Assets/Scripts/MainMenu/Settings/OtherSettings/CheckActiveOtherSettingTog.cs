@@ -1,3 +1,5 @@
+using DependencyControl;
+using Firebase.DataControl;
 using Firebase.Storage;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,19 +26,19 @@ namespace MainMenu.Settings.OtherSettings
             switch (setting)
             {
                 case OtherSetting.ShowLevelRank:
-                    tog.isOn = JsonStorage.instance.data.otherSettings.showLevelRanks;
+                    tog.isOn = Dependency.Get<JsonStorage>().data.otherSettings.showLevelRanks;
                     break; 
                 case OtherSetting.Particles:
-                    tog.isOn = JsonStorage.instance.data.otherSettings.particles;
+                    tog.isOn = Dependency.Get<JsonStorage>().data.otherSettings.particles;
                     break;
                 case OtherSetting.ShowTheSelectedBoost:
-                    tog.isOn = JsonStorage.instance.data.otherSettings.showSelectedBoostInGame;
+                    tog.isOn = Dependency.Get<JsonStorage>().data.otherSettings.showSelectedBoostInGame;
                     break;
                 case OtherSetting.CameraShake:
-                    tog.isOn = JsonStorage.instance.data.otherSettings.cameraShake;
+                    tog.isOn = Dependency.Get<JsonStorage>().data.otherSettings.cameraShake;
                     break;
                 case OtherSetting.Vibration:
-                    tog.isOn = JsonStorage.instance.data.otherSettings.vibration;
+                    tog.isOn = Dependency.Get<JsonStorage>().data.otherSettings.vibration;
                     break;
             }
         }

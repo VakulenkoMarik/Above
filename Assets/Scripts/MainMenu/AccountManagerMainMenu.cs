@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Firebase.Data;
+using DependencyControl;
+using Firebase.DataControl;
 using Firebase.Storage;
 using TMPro;
 using UnityEngine;
@@ -23,9 +24,9 @@ namespace MainMenu
     
         void Start()
         {
-            userName.text = UserData.instance.User.DisplayName;
+            userName.text = Dependency.Get<StorageData>().GetAuth().CurrentUser.DisplayName;
 
-            string equipedIcon = JsonStorage.instance.data.userData.userIcon;
+            string equipedIcon = Dependency.Get<JsonStorage>().data.userData.userIcon;
 
             foreach (Icons i in icons)
             {

@@ -1,5 +1,8 @@
+using DependencyControl;
 using Encrypting;
+using Firebase.DataControl;
 using Firebase.Storage;
+using Game;
 using Hero;
 using MainMenu;
 using UnityEngine;
@@ -15,7 +18,7 @@ namespace Other
         {
             if (isNeedToBuy)
             {
-                bool isBought = JsonStorage.instance.data.icons.icons.Contains(iconName);
+                bool isBought = Dependency.Get<JsonStorage>().data.icons.icons.Contains(iconName);
 
                 if (isBought)
                 {
@@ -26,7 +29,7 @@ namespace Other
 
         public void Unlock()
         {
-            JsonStorage.instance.data.icons.icons.Add(iconName);
+            Dependency.Get<JsonStorage>().data.icons.icons.Add(iconName);
 
             EquipAccIcon.instance.CheckLock();
         }
@@ -35,16 +38,16 @@ namespace Other
         {
             if (CoinsManagerInMainMenu.instance.coinsF >= price)
             {
-                JsonStorage.instance.data.icons.icons.Add(iconName);
+                Dependency.Get<JsonStorage>().data.icons.icons.Add(iconName);
 
                 gameObject.SetActive(false);
 
                 EquipAccIcon.instance.CheckLock();
             
                 CoinsManagerInMainMenu.instance.coinsF -= price;
-                JsonStorage.instance.data.userData.coinsF = CoinsManagerInMainMenu.instance.coinsF;
+                Dependency.Get<JsonStorage>().data.userData.coinsF = CoinsManagerInMainMenu.instance.coinsF;
 
-                CryptoHelper.Encrypt(JsonStorage.instance.data, JsonStorage.instance.password);
+                CryptoHelper.Encrypt(Dependency.Get<JsonStorage>().data, Dependency.Get<JsonStorage>().password);
 
                 CoinsManagerInMainMenu.instance.UpdateUI();
             }
@@ -54,16 +57,16 @@ namespace Other
         {
             if (CoinsManagerInMainMenu.instance.coinsS >= price)
             {
-                JsonStorage.instance.data.icons.icons.Add(iconName);
+                Dependency.Get<JsonStorage>().data.icons.icons.Add(iconName);
 
                 gameObject.SetActive(false);
 
                 EquipAccIcon.instance.CheckLock();
             
                 CoinsManagerInMainMenu.instance.coinsS -= price;
-                JsonStorage.instance.data.userData.coinsS = CoinsManagerInMainMenu.instance.coinsS;
+                Dependency.Get<JsonStorage>().data.userData.coinsS = CoinsManagerInMainMenu.instance.coinsS;
 
-                CryptoHelper.Encrypt(JsonStorage.instance.data, JsonStorage.instance.password);
+                CryptoHelper.Encrypt(Dependency.Get<JsonStorage>().data, Dependency.Get<JsonStorage>().password);
 
                 CoinsManagerInMainMenu.instance.UpdateUI();
             }

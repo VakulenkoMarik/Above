@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using DependencyControl;
+using Firebase.DataControl;
 using Firebase.Storage;
 using UnityEngine;
 
@@ -14,9 +16,9 @@ namespace MainMenu.Settings.OtherSettings
 
         void Start()
         {
-            ShowLevelRanks(JsonStorage.instance.data.otherSettings.showLevelRanks);
-            ActivateParticles(JsonStorage.instance.data.otherSettings.particles);
-            ShowTheSelectedBoost(JsonStorage.instance.data.otherSettings.showSelectedBoostInGame);
+            ShowLevelRanks(Dependency.Get<JsonStorage>().data.otherSettings.showLevelRanks);
+            ActivateParticles(Dependency.Get<JsonStorage>().data.otherSettings.particles);
+            ShowTheSelectedBoost(Dependency.Get<JsonStorage>().data.otherSettings.showSelectedBoostInGame);
         }
 
         public void ShowLevelRanks(bool tog)

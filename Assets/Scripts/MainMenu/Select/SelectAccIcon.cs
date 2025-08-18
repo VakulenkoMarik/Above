@@ -1,3 +1,5 @@
+using DependencyControl;
+using Firebase.DataControl;
 using Firebase.Storage;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,7 +18,7 @@ namespace MainMenu.Select
 
             CheckLock();
 
-            if (iconName == JsonStorage.instance.data.userData.userIcon)
+            if (iconName == Dependency.Get<JsonStorage>().data.userData.userIcon)
             {
                 Change();
             }
@@ -24,7 +26,7 @@ namespace MainMenu.Select
 
         public void CheckLock()
         {
-            bool isBought = JsonStorage.instance.data.icons.icons.Contains(iconName);
+            bool isBought = Dependency.Get<JsonStorage>().data.icons.icons.Contains(iconName);
 
             if (isBought == true)
             {
