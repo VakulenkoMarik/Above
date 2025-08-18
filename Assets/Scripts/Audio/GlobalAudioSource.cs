@@ -10,7 +10,7 @@ namespace Audio
         Music,
         Sfx,
         UI,
-        Ambient
+        Ambient,
     }
     
     public class GlobalAudioSource : DependencyMonoBehaviour

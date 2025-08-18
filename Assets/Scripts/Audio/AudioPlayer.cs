@@ -20,6 +20,7 @@ namespace Audio
     
         public void Play() => _localSource = Source.Play(channel, clip, loop, volumeOffset);
         public void PlayOneShot() => _localSource = Source.PlayOneShot(channel, clip, volumeOffset);
+        public void PlayOneShot(AudioClip targetAudio) => _localSource = Source.PlayOneShot(channel, targetAudio, volumeOffset);
         public void Pause() => _localSource?.Pause();
         
         public void Stop()
