@@ -1,14 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using DependencyControl;
+using Other;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using WifiControl;
 
 public class OfflineManager : MonoBehaviour
 {
+    private LoadingScreenActivator LoadingScreenActivator => _loadingScreenActivator ??= Dependency.Get<LoadingScreenActivator>();
+    private LoadingScreenActivator _loadingScreenActivator;
+    
     void Start()
     {
-        GameManager.instance.SetActiveLoadingScreen(false);
+        LoadingScreenActivator.SetActiveLoadingScreen(false);
 
         if (WIFIChecking.instance != null)
         {
@@ -23,7 +28,7 @@ public class OfflineManager : MonoBehaviour
 
     public void ToLobby()
     {
-        GameManager.instance.gameObject.GetComponent<AudioSource>().volume = 0.2f;
+        LoadingScreenActivator.gameObject.GetComponent<AudioSource>().volume = 0.2f;
         SceneManager.LoadSceneAsync("Authentication");
     }
 
@@ -34,12 +39,12 @@ public class OfflineManager : MonoBehaviour
 
     private IEnumerator GameIsStarted(int index)
     {
-        GameManager.instance.SetActiveLoadingScreen(true);
+        LoadingScreenActivator.SetActiveLoadingScreen(true);
 
         yield return new WaitForSeconds(0.5f);
 
         LevelManager.instance.eqipedLevel = index;
-        GameManager.instance.GetComponent<AudioSource>().enabled = false;
+        LoadingScreenActivator.GetComponent<AudioSource>().enabled = false;
 
         SceneManager.LoadSceneAsync("OfflineGame");
     }

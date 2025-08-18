@@ -1,4 +1,5 @@
 using System.Collections;
+using DependencyControl;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,7 +9,7 @@ namespace Other.Buttons
     {
         IEnumerator RetryGameAsync()
         {
-            GameManager.instance.SetActiveLoadingScreen(true);
+            Dependency.Get<LoadingScreenActivator>().SetActiveLoadingScreen(true);
 
             yield return new WaitForSeconds(3);
 
@@ -17,7 +18,7 @@ namespace Other.Buttons
 
         IEnumerator ReturnToMainMenuAsync()
         {
-            GameManager.instance.SetActiveLoadingScreen(true);
+            Dependency.Get<LoadingScreenActivator>().SetActiveLoadingScreen(true);
 
             yield return new WaitForSeconds(3);
 

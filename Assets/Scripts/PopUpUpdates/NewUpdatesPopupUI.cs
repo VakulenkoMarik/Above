@@ -1,5 +1,8 @@
 using System.Collections;
+using DependencyControl;
+using Firebase;
 using Firebase.Auth;
+using Other;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -32,6 +35,9 @@ namespace PopUpUpdates
         bool isAlreadyCheckedForUpdates = false;
 
         GameData latestGameData;
+        
+        private LoadingScreenActivator LoadingScreenActivator => _loadingScreenActivator ??= Dependency.Get<LoadingScreenActivator>();
+        private LoadingScreenActivator _loadingScreenActivator;
 
         void Awake()
         {
@@ -58,8 +64,8 @@ namespace PopUpUpdates
 
             if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
             {
-                GameManager.instance.SetActiveLoadingScreen(true);
-                GameManager.instance.SetMessage("Error");
+                LoadingScreenActivator.SetActiveLoadingScreen(true);
+                LoadingScreenActivator.SetMessage("Error");
             }
             else
             {
@@ -79,7 +85,7 @@ namespace PopUpUpdates
                 }
                 else
                 {
-                    FirebaseAuthManager.instance.StartAction();
+                    //Dependency.Get<FirebaseAuthManager>().StartAction();
                 }
             }
 

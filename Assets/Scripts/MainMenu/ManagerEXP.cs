@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
+using DependencyControl;
 using Encrypting;
+using Firebase.DataControl;
 using Firebase.Storage;
+using Other;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -39,18 +42,18 @@ namespace MainMenu
                 WIFIChecking.instance.ChangeSceneName();
             }
         
-            if (JsonStorage.instance.data.userData.level >= 20)
+            if (Dependency.Get<JsonStorage>().data.userData.level >= 20)
             {
-                bool isBought = JsonStorage.instance.data.icons.icons.Contains("exp");
+                bool isBought = Dependency.Get<JsonStorage>().data.icons.icons.Contains("exp");
 
                 if (isBought == false)
                 {
-                    JsonStorage.instance.data.icons.icons.Add("exp");
+                    Dependency.Get<JsonStorage>().data.icons.icons.Add("exp");
                     EquipAccIcon.instance.CheckLock();
                 }
             }
 
-            hightScore.text = "" + JsonStorage.instance.data.userData.record;
+            hightScore.text = "" + Dependency.Get<JsonStorage>().data.userData.record;
 
             GetValues();
 
@@ -59,16 +62,16 @@ namespace MainMenu
 
             if (level == 0)
             {
-                JsonStorage.instance.isDataException = true;
-                GameManager.instance.SetActiveLoadingScreen(true);
-                GameManager.instance.SetMessage("Data loading error. Please re-enter the game");
+                Dependency.Get<JsonStorage>().isDataException = true;
+                Dependency.Get<LoadingScreenActivator>().SetActiveLoadingScreen(true);
+                Dependency.Get<LoadingScreenActivator>().SetMessage("Data loading error. Please re-enter the game");
             }
         }
 
         public void GetValues()
         {
-            exp = JsonStorage.instance.data.userData.exp;
-            level = JsonStorage.instance.data.userData.level;
+            exp = Dependency.Get<JsonStorage>().data.userData.exp;
+            level = Dependency.Get<JsonStorage>().data.userData.level;
         }
 
         private void SetValues()
@@ -98,10 +101,10 @@ namespace MainMenu
             {
                 exp -= countToNextLevel;
                 level++;
-                JsonStorage.instance.data.userData.exp -= countToNextLevel;
-                JsonStorage.instance.data.userData.level++;
+                Dependency.Get<JsonStorage>().data.userData.exp -= countToNextLevel;
+                Dependency.Get<JsonStorage>().data.userData.level++;
 
-                CryptoHelper.Encrypt(JsonStorage.instance.data, JsonStorage.instance.password);
+                CryptoHelper.Encrypt(Dependency.Get<JsonStorage>().data, Dependency.Get<JsonStorage>().password);
 
                 SetValues();
             }

@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using DependencyControl;
+using Other;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,6 +10,9 @@ using UnityEngine.UI;
 public class WinPanel : MonoBehaviour
 {
     [SerializeField] private Button NextLevelButton;
+    
+    private LoadingScreenActivator LoadingScreenActivator => _loadingScreenActivator ??= Dependency.Get<LoadingScreenActivator>();
+    private LoadingScreenActivator _loadingScreenActivator;
 
     void Start()
     {
@@ -24,15 +29,15 @@ public class WinPanel : MonoBehaviour
 
     public void GoToMenu()
     {
-        GameManager.instance.SetActiveLoadingScreen(true);
+        LoadingScreenActivator.SetActiveLoadingScreen(true);
 
-        GameManager.instance.GetComponent<AudioSource>().enabled = true;
+        LoadingScreenActivator.GetComponent<AudioSource>().enabled = true;
         SceneManager.LoadSceneAsync("OfflineMenu");
     }
 
     public void NextLevel()
     {
-        GameManager.instance.SetActiveLoadingScreen(true);
+        LoadingScreenActivator.SetActiveLoadingScreen(true);
 
         LevelManager.instance.eqipedLevel++;
         SceneManager.LoadSceneAsync("OfflineGame");
@@ -40,7 +45,7 @@ public class WinPanel : MonoBehaviour
 
     public void RetryLevel()
     {
-        GameManager.instance.SetActiveLoadingScreen(true);
+        LoadingScreenActivator.SetActiveLoadingScreen(true);
         
         SceneManager.LoadSceneAsync("OfflineGame");
     }

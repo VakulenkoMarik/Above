@@ -1,4 +1,5 @@
 using System.Collections;
+using DependencyControl;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -25,8 +26,8 @@ namespace Other.Buttons
 
         public void PlayGame()
         {
-            GameManager.instance.gameObject.GetComponent<AudioSource>().enabled = false;
-            GameManager.instance.SetActiveLoadingScreen(true);
+            Dependency.Get<LoadingScreenActivator>().gameObject.GetComponent<AudioSource>().enabled = false;
+            Dependency.Get<LoadingScreenActivator>().SetActiveLoadingScreen(true);
 
             StartCoroutine(LoadGameSceneAsync());
         }

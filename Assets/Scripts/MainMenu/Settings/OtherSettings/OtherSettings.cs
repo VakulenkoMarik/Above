@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Threading.Tasks;
+using DependencyControl;
 using Encrypting;
 using Firebase;
 using Firebase.Auth;
-using Firebase.Data;
+using Firebase.DataControl;
 using Firebase.Storage;
+using Other;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -20,22 +22,25 @@ namespace MainMenu.Settings.OtherSettings
         [SerializeField] private TMP_InputField renameNickField;
         [SerializeField] private Button renameNickButton;
         [SerializeField] private GameObject renameNickPanel;
-        [SerializeField] private TextMeshProUGUI renameNickcoinsCountText;
+        [SerializeField] private TextMeshProUGUI renameNickCoinsCountText;
+        
+        private StorageData StorageData => _storageData ??= Dependency.Get<StorageData>();
+        private StorageData _storageData;
 
         public void ShowLevelRanks(bool tog)
         {
             if (tog == true)
             {
-                JsonStorage.instance.data.otherSettings.showLevelRanks = true;
+                Dependency.Get<JsonStorage>().data.otherSettings.showLevelRanks = true;
             }
             else
             {
-                JsonStorage.instance.data.otherSettings.showLevelRanks = false;
+                Dependency.Get<JsonStorage>().data.otherSettings.showLevelRanks = false;
             }
 
             controller.ShowLevelRanks(tog);
 
-            CryptoHelper.Encrypt(JsonStorage.instance.data, JsonStorage.instance.password);
+            CryptoHelper.Encrypt(Dependency.Get<JsonStorage>().data, Dependency.Get<JsonStorage>().password);
         }
 
         public void OpenDocumentation()
@@ -60,11 +65,11 @@ namespace MainMenu.Settings.OtherSettings
 
         async Task AccountDeleting()
         {
-            await StorageData.instance.DeleteUser();
+            await StorageData.DeleteUser();
 
             Debug.Log("Data is deleted");
 
-            GameManager.instance.SetActiveLoadingScreen(false);
+            Dependency.Get<LoadingScreenActivator>().SetActiveLoadingScreen(false);
             SceneManager.LoadSceneAsync("Authentication");
         }
 
@@ -72,15 +77,15 @@ namespace MainMenu.Settings.OtherSettings
         {
             renameNickPanel.SetActive(true);
 
-            if (JsonStorage.instance.data.userData.coinsS >= 5)
+            if (Dependency.Get<JsonStorage>().data.userData.coinsS >= 5)
             {
                 renameNickButton.interactable = true;
-                renameNickcoinsCountText.color = Color.white;
+                renameNickCoinsCountText.color = Color.white;
             }
             else
             {
                 renameNickButton.interactable = false;
-                renameNickcoinsCountText.color = Color.red;
+                renameNickCoinsCountText.color = Color.red;
             }
         }
 
@@ -91,11 +96,11 @@ namespace MainMenu.Settings.OtherSettings
 
         private IEnumerator TryRenameNickname()
         {
-            if (JsonStorage.instance.data.userData.coinsS >= 5)
+            if (Dependency.Get<JsonStorage>().data.userData.coinsS >= 5)
             {
                 UserProfile profile = new UserProfile { DisplayName = renameNickField.text };
 
-                var updateProfileTask = UserData.instance.User.UpdateUserProfileAsync(profile);
+                var updateProfileTask = StorageData.GetAuth().CurrentUser.UpdateUserProfileAsync(profile);
 
                 yield return new WaitUntil(() => updateProfileTask.IsCompleted);
 
@@ -108,9 +113,9 @@ namespace MainMenu.Settings.OtherSettings
                 }
                 else
                 {
-                    JsonStorage.instance.data.userData.coinsS -= 5;
+                    Dependency.Get<JsonStorage>().data.userData.coinsS -= 5;
 
-                    StorageData.instance.SaveJsonData();
+                    StorageData.SaveJsonData();
 
                     SceneManager.LoadSceneAsync(1);
                 }
@@ -121,60 +126,60 @@ namespace MainMenu.Settings.OtherSettings
         {
             if (tog == true)
             {
-                JsonStorage.instance.data.otherSettings.particles = true;
+                Dependency.Get<JsonStorage>().data.otherSettings.particles = true;
             }
             else
             {
-                JsonStorage.instance.data.otherSettings.particles = false;
+                Dependency.Get<JsonStorage>().data.otherSettings.particles = false;
             }
 
             controller.ActivateParticles(tog);
 
-            CryptoHelper.Encrypt(JsonStorage.instance.data, JsonStorage.instance.password);
+            CryptoHelper.Encrypt(Dependency.Get<JsonStorage>().data, Dependency.Get<JsonStorage>().password);
         }
 
         public void ShowTheSelectedBoost(bool tog)
         {
             if (tog == true)
             {
-                JsonStorage.instance.data.otherSettings.showSelectedBoostInGame = true;
+                Dependency.Get<JsonStorage>().data.otherSettings.showSelectedBoostInGame = true;
             }
             else
             {
-                JsonStorage.instance.data.otherSettings.showSelectedBoostInGame = false;
+                Dependency.Get<JsonStorage>().data.otherSettings.showSelectedBoostInGame = false;
             }
 
             controller.ShowTheSelectedBoost(tog);
 
-            CryptoHelper.Encrypt(JsonStorage.instance.data, JsonStorage.instance.password);
+            CryptoHelper.Encrypt(Dependency.Get<JsonStorage>().data, Dependency.Get<JsonStorage>().password);
         }
 
         public void CameraShake(bool tog)
         {
             if (tog == true)
             {
-                JsonStorage.instance.data.otherSettings.cameraShake = true;
+                Dependency.Get<JsonStorage>().data.otherSettings.cameraShake = true;
             }
             else
             {
-                JsonStorage.instance.data.otherSettings.cameraShake = false;
+                Dependency.Get<JsonStorage>().data.otherSettings.cameraShake = false;
             }
 
-            CryptoHelper.Encrypt(JsonStorage.instance.data, JsonStorage.instance.password);
+            CryptoHelper.Encrypt(Dependency.Get<JsonStorage>().data, Dependency.Get<JsonStorage>().password);
         }
 
         public void Vibration(bool tog)
         {
             if (tog == true)
             {
-                JsonStorage.instance.data.otherSettings.vibration = true;
+                Dependency.Get<JsonStorage>().data.otherSettings.vibration = true;
             }
             else
             {
-                JsonStorage.instance.data.otherSettings.vibration = false;
+                Dependency.Get<JsonStorage>().data.otherSettings.vibration = false;
             }
 
-            CryptoHelper.Encrypt(JsonStorage.instance.data, JsonStorage.instance.password);
+            CryptoHelper.Encrypt(Dependency.Get<JsonStorage>().data, Dependency.Get<JsonStorage>().password);
         }
     }
 }

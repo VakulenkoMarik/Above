@@ -1,4 +1,8 @@
+using Audio;
+using DependencyControl;
+using Firebase.DataControl;
 using Firebase.Storage;
+using Other;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,17 +19,17 @@ namespace MainMenu
 
         void Start()
         {
-            musicMainMenu = GameManager.instance.gameObject.GetComponent<AudioSource>();
+            musicMainMenu = Dependency.Get<LoadingScreenActivator>().gameObject.GetComponent<AudioSource>();
 
             LoadAudioValue();
         }
 
         private void LoadAudioValue()
         {
-            sliders[0].value = JsonStorage.instance.data.audioSettings.musicMainMenu;
-            sliders[1].value = JsonStorage.instance.data.audioSettings.sfxMainMenu;
-            sliders[2].value = JsonStorage.instance.data.audioSettings.musicGame;
-            sliders[3].value = JsonStorage.instance.data.audioSettings.sfxGame;
+            sliders[0].value = Dependency.Get<JsonStorage>().data.audioSettings.musicMainMenu;
+            sliders[1].value = Dependency.Get<JsonStorage>().data.audioSettings.sfxMainMenu;
+            sliders[2].value = Dependency.Get<JsonStorage>().data.audioSettings.musicGame;
+            sliders[3].value = Dependency.Get<JsonStorage>().data.audioSettings.sfxGame;
 
             musicMainMenu.enabled = true;
 

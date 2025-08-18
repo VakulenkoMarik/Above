@@ -1,4 +1,6 @@
 using System.Collections;
+using DependencyControl;
+using Other;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -51,15 +53,18 @@ namespace TutorialControl
         private Rigidbody2D rb;
 
         private Animator camAnim;
+        
+        private LoadingScreenActivator LoadingScreenActivator => _loadingScreenActivator ??= Dependency.Get<LoadingScreenActivator>();
+        private LoadingScreenActivator _loadingScreenActivator;
 
         private int jumpCount = 0;
         private PlayerTutorial playerTutorial;
 
         void Start()
         {
-            if (GameManager.instance != null)
+            if (LoadingScreenActivator != null)
             {
-                GameManager.instance.GetComponent<AudioSource>().enabled = false;
+                LoadingScreenActivator.GetComponent<AudioSource>().enabled = false;
             }
         
             rb = hero.GetComponent<Rigidbody2D>();
@@ -248,10 +253,10 @@ namespace TutorialControl
 
         private IEnumerator ToLobby()
         {
-            if (GameManager.instance != null)
+            if (LoadingScreenActivator != null)
             {
-                GameManager.instance.GetComponent<AudioSource>().enabled = true;
-                GameManager.instance.SetActiveLoadingScreen(true);
+                LoadingScreenActivator.GetComponent<AudioSource>().enabled = true;
+                LoadingScreenActivator.SetActiveLoadingScreen(true);
             }
         
             yield return new WaitForSeconds(0.5f);
