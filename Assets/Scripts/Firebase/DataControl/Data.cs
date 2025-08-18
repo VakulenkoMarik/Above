@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Firebase.Data
+namespace Firebase.DataControl
 {
     [System.Serializable]
     public class Data
@@ -23,17 +23,6 @@ namespace Firebase.Data
             audioSettings = other.audioSettings;
             otherSettings = other.otherSettings;
             icons = other.icons;
-        }
-    
-        public Data()
-        {
-            boolean = new Boolean();
-            userData = new UserData();
-            purchasedItems = new PurchasedItems();
-            currentShop = new CurrentShop();
-            audioSettings = new AudioSettings();
-            otherSettings = new OtherSettings();
-            icons = new Icons();
         }
 
         public Boolean boolean;
