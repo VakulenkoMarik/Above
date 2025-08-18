@@ -1,5 +1,4 @@
 using System.Collections;
-using Firebase.Storage;
 using Game;
 using Hero;
 using PopUpUpdates;
@@ -45,7 +44,6 @@ namespace WifiControl
             if (request.error != null)
             {
                 errorPanel.SetActive(true);
-                JsonStorage.instance.ActivateTimer(false);
 
                 if (sceneName == "Game")
                 {
@@ -56,25 +54,12 @@ namespace WifiControl
             else
             {
                 errorPanel.SetActive(false);
-
-                if (JsonStorage.instance != null)
-                {
-                    if (JsonStorage.instance.isFrozenTimer)
-                    {
-                        JsonStorage.instance.ActivateTimer(true);
-                    }
-                }
             
                 if (sceneName == "Game")
                 {
                     if (PauseController.instance.isPause == false && PauseController.instance.Hero != null)
                     {
                         PauseController.instance.Hero.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-
-                        if (StartOnClick.instance == null)
-                        {
-                            PauseController.instance.Hero.GetComponent<Player>().isCanMove = true;
-                        }
                     }
                 }
             }
