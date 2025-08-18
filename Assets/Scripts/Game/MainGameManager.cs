@@ -1,4 +1,7 @@
 using System.Collections;
+using Audio;
+using DependencyControl;
+using Firebase.DataControl;
 using Firebase.Storage;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,26 +18,26 @@ namespace Game
         [HideInInspector]
         public AudioSource audioSource;
 
-        private bool isReady = false;
+        private bool _isReady = false;
     
         void Start()
         {
             audioSource = GetComponent<AudioSource>();
 
-            musicSlider.value = JsonStorage.instance.data.audioSettings.musicGame;
-            sfxSlider.value = JsonStorage.instance.data.audioSettings.sfxGame;
-            Debug.Log(sfxSlider.value + "sfx slider");
+            JsonStorage storage = Dependency.Get<JsonStorage>();
+
+            musicSlider.value = storage.data.audioSettings.musicGame;
+            sfxSlider.value = storage.data.audioSettings.sfxGame;
 
             audioSource.volume = musicSlider.value;
 
-            float sfxVolume = JsonStorage.instance.data.audioSettings.sfxGame;
+            float sfxVolume = storage.data.audioSettings.sfxGame;
 
-            for (int i = 0; i < SFX.Length; i++)
-            {
-                SFX[i].volume = sfxVolume;
+            foreach (var source in SFX) {
+                source.volume = sfxVolume;
             }
 
-            isReady = true;
+            _isReady = true;
         
             StartCoroutine(GameMusicOn());
         }
@@ -48,7 +51,7 @@ namespace Game
 
         public void SaveAudioSettings()
         {
-            if (isReady)
+            if (_isReady)
             {
                 AudioControl.SetAudioSetting(musicSlider.value, "musicGame");
                 AudioControl.SetAudioSetting(sfxSlider.value, "sfxGame");
