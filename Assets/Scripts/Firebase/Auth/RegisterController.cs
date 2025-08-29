@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using DependencyControl;
+using Extensions;
 using Firebase.Extensions;
 using Firebase.Frontend;
 using Other;
@@ -40,7 +41,7 @@ namespace Firebase.Auth
                 LoadingScreenActivator.SetActiveLoadingScreen(false);
             }
             else if (email == "") {
-                _uiActionsSender.SetErrorMessage("email field is empty");
+                _uiActionsSender.SetErrorMessage("Email field is empty");
                 LoadingScreenActivator.SetActiveLoadingScreen(false);
             }
             else if (!string.Equals(password, confirmPassword, StringComparison.Ordinal)) {
@@ -57,25 +58,7 @@ namespace Firebase.Auth
 
                     FirebaseException firebaseException = registerTask.Exception.GetBaseException() as FirebaseException;
                     AuthError authError = (AuthError)firebaseException.ErrorCode;
-
-                    string failedMessage = "Registration Failed! Because ";
-                    switch (authError) {
-                        case AuthError.InvalidEmail:
-                            failedMessage += "Email is invalid";
-                            break;
-                        case AuthError.WrongPassword:
-                            failedMessage += "Wrong Password";
-                            break;
-                        case AuthError.MissingEmail:
-                            failedMessage += "Email is missing";
-                            break;
-                        case AuthError.MissingPassword:
-                            failedMessage += "Password is missing";
-                            break;
-                        default:
-                            failedMessage = "Registration Failed";
-                            break;
-                    }
+                    string failedMessage = "Registration Failed! Because " + authError.GetErrorText("Unknown error");
 
                     _uiActionsSender.SetErrorMessage(failedMessage);
                 }
@@ -91,25 +74,7 @@ namespace Firebase.Auth
 
                         FirebaseException firebaseException = updateProfileTask.Exception.GetBaseException() as FirebaseException;
                         AuthError authError = (AuthError)firebaseException.ErrorCode;
-                        
-                        string failedMessage = "Profile update Failed! Because ";
-                        switch (authError) {
-                            case AuthError.InvalidEmail:
-                                failedMessage += "Email is invalid";
-                                break;
-                            case AuthError.WrongPassword:
-                                failedMessage += "Wrong Password";
-                                break;
-                            case AuthError.MissingEmail:
-                                failedMessage += "Email is missing";
-                                break;
-                            case AuthError.MissingPassword:
-                                failedMessage += "Password is missing";
-                                break;
-                            default:
-                                failedMessage = "Profile update Failed";
-                                break;
-                        }
+                        string failedMessage = "Profile update Failed! Because " + authError.GetErrorText("Unknown error");
 
                         _uiActionsSender.SetErrorMessage(failedMessage);
 
@@ -143,26 +108,13 @@ namespace Firebase.Auth
 
                 if (sendEmailTask.Exception != null) {
                     FirebaseException firebaseException = sendEmailTask.Exception.GetBaseException() as FirebaseException;
-                    AuthError error = (AuthError) firebaseException.ErrorCode;
+                    AuthError error = (AuthError)firebaseException.ErrorCode;
+                    string failedMessage = error.GetErrorText("Unknown Error : Please try again later");
 
-                    string errorMessage = "Unknown Error : Please try again later";
-
-                    switch (error) {
-                        case AuthError.Cancelled:
-                            errorMessage = "Email verification was cancelled";
-                            break;
-                        case AuthError.TooManyRequests:
-                            errorMessage = "Too many request";
-                            break;
-                        case AuthError.InvalidRecipientEmail:
-                            errorMessage = "The email you entered is invalid";
-                            break;
-                    }
-
-                    _uiActionsSender.ShowVerificationResponse(false, _user.Email, errorMessage);
+                    _uiActionsSender.ShowVerificationResponse(false, _user.Email, failedMessage);
                 }
                 else {
-                    _uiActionsSender.ShowVerificationResponse(true, _user.Email, null);
+                    _uiActionsSender.ShowVerificationResponse(true, _user.Email);
                 }
             }
         }
@@ -183,22 +135,9 @@ namespace Firebase.Auth
                 if (task.Exception != null) {
                     FirebaseException firebaseException = task.Exception.GetBaseException() as FirebaseException;
                     AuthError error = (AuthError)firebaseException.ErrorCode;
+                    string failedMessage = "Error: " + error.GetErrorText("Login Failed");
 
-                    string failedMessage = "";
-
-                    switch (error) {
-                        case AuthError.InvalidEmail:
-                            failedMessage += "Email is invalid";
-                            break;
-                        case AuthError.MissingEmail:
-                            failedMessage += "Email is missing";
-                            break;
-                        default:
-                            failedMessage = "Login Failed";
-                            break;
-                    }
-
-                    _uiActionsSender.SetErrorMessage("Error: " + failedMessage);
+                    _uiActionsSender.SetErrorMessage(failedMessage);
                 }
             });
         }

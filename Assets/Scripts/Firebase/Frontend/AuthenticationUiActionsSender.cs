@@ -80,7 +80,7 @@ namespace Firebase.Frontend
             playOnlineButton.interactable = true;
         }
 
-        public void ShowVerificationResponse(bool isEmailSent, string emailId, string errorMessage) {
+        public void ShowVerificationResponse(bool isEmailSent, string emailId, string errorMessage = "") {
             DisposeAuthenticationPanel();
             emailVerificationPanel.SetActive(true);
 

@@ -1,13 +1,12 @@
 using System;
 using System.Collections;
 using DependencyControl;
+using Extensions;
 using Firebase.DataControl;
 using Firebase.Frontend;
-using Firebase.Storage;
 using Other;
 using Tools;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Firebase.Auth
 {
@@ -94,25 +93,7 @@ namespace Firebase.Auth
                 FirebaseException firebaseException = loginTask.Exception.GetBaseException() as FirebaseException;
                 AuthError authError = (AuthError)firebaseException.ErrorCode;
 
-                string failedMessage = "Login Failed! Because ";
-
-                switch (authError) {
-                    case AuthError.InvalidEmail:
-                        failedMessage += "Email is invalid";
-                        break;
-                    case AuthError.WrongPassword:
-                        failedMessage += "Wrong Password";
-                        break;
-                    case AuthError.MissingEmail:
-                        failedMessage += "Email is missing";
-                        break;
-                    case AuthError.MissingPassword:
-                        failedMessage += "Password is missing";
-                        break;
-                    default:
-                        failedMessage = "Login Failed";
-                        break;
-                }
+                string failedMessage = "Login Failed! Because " + authError.GetErrorText("Unknown error");
 
                 _uiActionsSender.SetErrorMessage(failedMessage);
             }
