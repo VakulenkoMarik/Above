@@ -80,11 +80,11 @@ namespace Firebase.Auth
             _onLogin.Invoke();
         }
         
-        public void Login(LoginData data) {
-            CoroutineRunner.Run(LoginAsync(data.Email, data.Password));
+        public void TryLogin(LoginData data) {
+            CoroutineRunner.Run(TryLoginAsync(data.Email, data.Password));
         }
 
-        private IEnumerator LoginAsync(string email, string password) {
+        private IEnumerator TryLoginAsync(string email, string password) {
             var loginTask = _auth.SignInWithEmailAndPasswordAsync(email, password);
 
             yield return new WaitUntil(() => loginTask.IsCompleted);
@@ -117,6 +117,13 @@ namespace Firebase.Auth
             _auth.SignOut();
             
             SceneLoader.OpenAuthenticationScene();
+        }
+
+        public void Reset() {
+            _onLogin = null;
+            _onFailVerification = null;
+            _onEndAutoLogin = null;
+            _onFailAutoLogin = null;
         }
     }
 }

@@ -1,8 +1,6 @@
 using DependencyControl;
 using Firebase.DataControl;
-using Firebase.Storage;
 using UnityEngine;
-using WifiControl;
 
 namespace Game
 {
@@ -14,8 +12,6 @@ namespace Game
 
         void Start()
         {
-            WIFIChecking.instance.ChangeSceneName();
-        
             if (isTutorial) return;
 
             if (!Dependency.Get<JsonStorage>().data.otherSettings.showSelectedBoostInGame)

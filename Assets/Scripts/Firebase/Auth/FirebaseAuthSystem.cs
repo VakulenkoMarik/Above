@@ -3,6 +3,7 @@ using Firebase.Frontend;
 using Firebase.Storage;
 using UnityEngine;
 using UnityEngine.Events;
+using WifiControl;
 
 namespace Firebase.Auth
 {
@@ -14,6 +15,8 @@ namespace Firebase.Auth
         private LoginController _loginController;
         private RegisterController _registerController;
         private StartGameInitiator _startGameInitiator;
+
+        private bool _wasAttemptAutoLogin = false;
 
         public FirebaseUser User => Auth.CurrentUser;
         public FirebaseAuth Auth { get; private set; }
@@ -39,53 +42,76 @@ namespace Firebase.Auth
         private void AfterFirebaseInitProcess(FirebaseInitializedData firebaseData) {
             SetLocalFirebaseReferences(firebaseData);
             
-            CreateControllers();
-            SetUpControllers();
+            (_loginController, _registerController, _startGameInitiator) = CreateControllers();
+            SetUpControllers(_loginController, _registerController, _startGameInitiator);
             
-            StartLoginProcess();
+            StartInternetChecking();
         }
-
+        
         private void SetLocalFirebaseReferences(FirebaseInitializedData firebaseData) {
             Auth = firebaseData.Auth;
             Storage = firebaseData.Storage;
         }
 
-        private void CreateControllers() {
-            _loginController = new LoginController(Auth, uiActionsSender);
-            _registerController = new RegisterController(Auth, uiActionsSender);
-            _startGameInitiator = new StartGameInitiator(Storage);
+        private (LoginController, RegisterController, StartGameInitiator) CreateControllers() {
+            return (new LoginController(Auth, uiActionsSender),
+                    new RegisterController(Auth, uiActionsSender),
+                    new StartGameInitiator(Storage));
         }
 
-        private void SetUpControllers() {
-            _loginController.SetActionSuccessfulLogin(() => AddListenerToOnlineButton(_startGameInitiator.OpenGameScene));
-            _loginController.SetActionEndAutoLoginAttempt(uiActionsSender.DeactivatePreLoginLoadingIcon);
-            _loginController.SetActionEndAutoLoginAttempt(uiActionsSender.ActivateButtons);
+        private void SetUpControllers(LoginController loginController, RegisterController registerController, StartGameInitiator startGameInitiator) {
+            loginController.SetActionSuccessfulLogin(() => AddListenerToOnlineButton(startGameInitiator.OpenGameScene));
+            loginController.SetActionEndAutoLoginAttempt(uiActionsSender.DeactivatePreLoginLoadingIcon);
+            loginController.SetActionEndAutoLoginAttempt(uiActionsSender.ActivateButtons);
             
-            _loginController.SetActionFailAutoLogin(() => AddListenerToOnlineButton(uiActionsSender.OpenLoginPanel));
-            _loginController.SetActionNotVerifiedUser(() => AddListenerToOnlineButton(_registerController.SendEmailForVerification));
+            loginController.SetActionFailAutoLogin(() => AddListenerToOnlineButton(uiActionsSender.OpenLoginPanel));
+            loginController.SetActionNotVerifiedUser(() => AddListenerToOnlineButton(registerController.SendEmailForVerification));
+        }
+
+        public void StartInternetChecking() {
+            WifiChecking wifiChecking = Dependency.Get<WifiChecking>();
+            wifiChecking.StartChecking();
+            wifiChecking.OnConnectionStatusChanged += HandleInternetConnection;
+        }
+        
+        private void HandleInternetConnection(InternetData data) {
+            if (data.IsInternetConnection && !_wasAttemptAutoLogin) {
+                _wasAttemptAutoLogin = true;
+                StartTryingAutoLoginProcess();
+            }
+            else if (!data.IsInternetConnection) {
+                uiActionsSender.SetActiveWifiErrorScreen(true);
+                data.Checker.OnConnectionStatusChanged -= HandleInternetConnection;
+            }
         }
 
         private void AddListenerToOnlineButton(UnityAction action) {
             uiActionsSender.AddListenerToOnlineButton(action);
         }
         
-        private void StartLoginProcess() {
+        private void StartTryingAutoLoginProcess() {
             _loginController.TryAutoLoginProcessing();
         }
 
         public void Login() {
             LoginData data = uiDataReader.GetLoginData();
-            _loginController.Login(data);
+            _loginController.TryLogin(data);
         }
         
         public void Register() {
             RegistrationData data = uiDataReader.GetRegistrationData();
-            _registerController.Register(data);
+            _registerController.TryRegister(data);
         }
 
         public void ForgetPassword() {
             string email = uiDataReader.GetForgetPasswordData();
             _registerController.ForgetPassword(email);
+        }
+
+        protected override void OnDestroy() {
+            _loginController.Reset();
+            
+            base.OnDestroy();
         }
     }
 }

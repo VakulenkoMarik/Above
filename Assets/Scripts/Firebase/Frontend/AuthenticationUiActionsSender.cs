@@ -19,6 +19,7 @@ namespace Firebase.Frontend
         [SerializeField] private GameObject loginPanel;
         [SerializeField] private GameObject registrationPanel;
         [SerializeField] private GameObject emailVerificationPanel;
+        [SerializeField] private GameObject wifiErrorScreen;
         
         [Header("--Texts--")]
         [SerializeField] private TextMeshProUGUI errorText;
@@ -30,6 +31,10 @@ namespace Firebase.Frontend
         
         [Header("--Other--")]
         [SerializeField] private GameObject preLoginLoadingIcon;
+
+        public void SetActiveWifiErrorScreen(bool activate) {
+            wifiErrorScreen.SetActive(activate);
+        }
         
         public void OpenGmail() {
             Application.OpenURL("https://mail.google.com");

@@ -28,7 +28,7 @@ namespace Firebase.Auth
             _uiActionsSender = uiActionsSender;
         }
         
-        public void Register(RegistrationData data) {
+        public void TryRegister(RegistrationData data) {
             LoadingScreenActivator.SetActiveLoadingScreen(true);
             CoroutineRunner.Run(RegisterAsync(data.UserName, data.Email, data.Password, data.ConfirmPassword));
         }

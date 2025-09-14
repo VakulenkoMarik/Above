@@ -37,11 +37,6 @@ namespace MainMenu
     
         void Start()
         {
-            if (WIFIChecking.instance != null)
-            {
-                WIFIChecking.instance.ChangeSceneName();
-            }
-        
             if (Dependency.Get<JsonStorage>().data.userData.level >= 20)
             {
                 bool isBought = Dependency.Get<JsonStorage>().data.icons.icons.Contains("exp");
