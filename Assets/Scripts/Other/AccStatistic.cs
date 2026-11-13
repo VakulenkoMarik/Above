@@ -1,46 +1,55 @@
 using System;
+using DependencyControl;
+using Firebase.DataControl;
+using Firebase.Storage;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AccStatistic : MonoBehaviour
+namespace Other
 {
-    [Header ("## Panel parameters : ")]
-    [SerializeField] private Image userIcon;
-    [SerializeField] private TextMeshProUGUI flyCoinsAllTime;
-    [SerializeField] private TextMeshProUGUI superCoinsAllTime;
-    [SerializeField] private TextMeshProUGUI hightScore;
-    [SerializeField] private TextMeshProUGUI level;
-    [SerializeField] private TextMeshProUGUI createdAccount;
-
-    [SerializeField] private TextMeshProUGUI userName;
-    [SerializeField] private TextMeshProUGUI userEmail;
-
-    [SerializeField] private GameObject panel;
-
-    [Header ("## Other resources : ")]
-    [SerializeField] private Image icon;
-
-    public void OpenStatistic()
+    public class AccStatistic : MonoBehaviour
     {
-        userIcon.sprite = icon.sprite;
+        [Header ("## Panel parameters : ")]
+        [SerializeField] private Image userIcon;
+        [SerializeField] private TextMeshProUGUI flyCoinsAllTime;
+        [SerializeField] private TextMeshProUGUI superCoinsAllTime;
+        [SerializeField] private TextMeshProUGUI hightScore;
+        [SerializeField] private TextMeshProUGUI level;
+        [SerializeField] private TextMeshProUGUI createdAccount;
 
-        flyCoinsAllTime.text = JsonStorage.instance.data.userData.coinsFAllTime + "";
-        superCoinsAllTime.text = JsonStorage.instance.data.userData.coinsSAllTime + "";
-        hightScore.text = JsonStorage.instance.data.userData.record + "";
-        level.text = JsonStorage.instance.data.userData.level + "";
+        [SerializeField] private TextMeshProUGUI userName;
+        [SerializeField] private TextMeshProUGUI userEmail;
 
-        ulong creationTimestamp = UserData.instance.metadata.CreationTimestamp;
-        long signedTimestamp = (long)creationTimestamp;
+        [SerializeField] private GameObject panel;
 
-        DateTime creationDateTime = DateTimeOffset.FromUnixTimeMilliseconds(signedTimestamp).DateTime;
-        string formattedDate = creationDateTime.ToString("yyyy-MM-dd");
+        [Header ("## Other resources : ")]
+        [SerializeField] private Image icon;
+        
+        private StorageData StorageData => _storageData ??= Dependency.Get<StorageData>();
+        private StorageData _storageData;
 
-        createdAccount.text = formattedDate;
+        public void OpenStatistic()
+        {
+            userIcon.sprite = icon.sprite;
 
-        userName.text = UserData.instance.User.DisplayName;
-        userEmail.text = UserData.instance.User.Email;
+            flyCoinsAllTime.text = Dependency.Get<JsonStorage>().data.userData.coinsFAllTime + "";
+            superCoinsAllTime.text = Dependency.Get<JsonStorage>().data.userData.coinsSAllTime + "";
+            hightScore.text = Dependency.Get<JsonStorage>().data.userData.record + "";
+            level.text = Dependency.Get<JsonStorage>().data.userData.level + "";
 
-        panel.SetActive(true);
+            ulong creationTimestamp = StorageData.GetAuth().CurrentUser.Metadata.CreationTimestamp;
+            long signedTimestamp = (long)creationTimestamp;
+
+            DateTime creationDateTime = DateTimeOffset.FromUnixTimeMilliseconds(signedTimestamp).DateTime;
+            string formattedDate = creationDateTime.ToString("yyyy-MM-dd");
+
+            createdAccount.text = formattedDate;
+
+            userName.text = StorageData.GetAuth().CurrentUser.DisplayName;
+            userEmail.text = StorageData.GetAuth().CurrentUser.Email;
+
+            panel.SetActive(true);
+        }
     }
 }

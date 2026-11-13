@@ -1,35 +1,38 @@
 using System.Collections;
-using System.Collections.Generic;
+using DependencyControl;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ButtonsManagerInGame : MonoBehaviour
+namespace Other.Buttons
 {
-    IEnumerator RetryGameAsync()
+    public class ButtonsManagerInGame : MonoBehaviour
     {
-        GameManager.instance.SetActiveLoadingScreen(true);
+        IEnumerator RetryGameAsync()
+        {
+            Dependency.Get<LoadingScreenActivator>().SetActiveLoadingScreen(true);
 
-        yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(3);
 
-        SceneManager.LoadSceneAsync("Game");
-    }
+            SceneManager.LoadSceneAsync("Game");
+        }
 
-    IEnumerator ReturnToMainMenuAsync()
-    {
-        GameManager.instance.SetActiveLoadingScreen(true);
+        IEnumerator ReturnToMainMenuAsync()
+        {
+            Dependency.Get<LoadingScreenActivator>().SetActiveLoadingScreen(true);
 
-        yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(3);
 
-        SceneManager.LoadSceneAsync("MainMenu");
-    }
+            SceneManager.LoadSceneAsync("MainMenu");
+        }
     
-    public void RetryGame()
-    {
-        StartCoroutine(RetryGameAsync());
-    }
+        public void RetryGame()
+        {
+            StartCoroutine(RetryGameAsync());
+        }
 
-    public void ToMainMenu()
-    {
-        StartCoroutine(ReturnToMainMenuAsync());
+        public void ToMainMenu()
+        {
+            StartCoroutine(ReturnToMainMenuAsync());
+        }
     }
 }

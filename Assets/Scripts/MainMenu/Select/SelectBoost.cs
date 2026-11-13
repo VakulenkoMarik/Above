@@ -1,74 +1,81 @@
+using DependencyControl;
+using Encrypting;
+using Firebase.DataControl;
+using Firebase.Storage;
 using UnityEngine;
 
-public class SelectBoost : MonoBehaviour
+namespace MainMenu.Select
 {
-    private int currentBoost;
-
-    [SerializeField] private GameObject[] AllBoosts;
-    [SerializeField] private GameObject[] Heroes;
-
-    [SerializeField] private GameObject[] EquipButtons;
-    [SerializeField] private GameObject[] EquipedButtons;
-
-    [SerializeField] private Color shieldColor;
-    [SerializeField] private Color standartColor;
-
-    void Start()
+    public class SelectBoost : MonoBehaviour
     {
-        if (JsonStorage.instance.data.currentShop.currentBoost == 3)
+        private int currentBoost;
+
+        [SerializeField] private GameObject[] AllBoosts;
+        [SerializeField] private GameObject[] Heroes;
+
+        [SerializeField] private GameObject[] EquipButtons;
+        [SerializeField] private GameObject[] EquipedButtons;
+
+        [SerializeField] private Color shieldColor;
+        [SerializeField] private Color standartColor;
+
+        void Start()
         {
-            foreach (GameObject hero in Heroes)
+            if (Dependency.Get<JsonStorage>().data.currentShop.currentBoost == 3)
             {
-                hero.GetComponent<SpriteRenderer>().color = shieldColor;
+                foreach (GameObject hero in Heroes)
+                {
+                    hero.GetComponent<SpriteRenderer>().color = shieldColor;
+                }
             }
-        }
-        else
-        {
-            foreach (GameObject hero in Heroes)
+            else
             {
-                hero.GetComponent<SpriteRenderer>().color = standartColor;
+                foreach (GameObject hero in Heroes)
+                {
+                    hero.GetComponent<SpriteRenderer>().color = standartColor;
+                }
             }
+
+            currentBoost = Dependency.Get<JsonStorage>().data.currentShop.currentBoost;
+
+            EquipedButtons[currentBoost].SetActive(true);
+            EquipButtons[currentBoost].SetActive(false);
+
+            AllBoosts[currentBoost].SetActive(true);
         }
 
-        currentBoost = JsonStorage.instance.data.currentShop.currentBoost;
-
-        EquipedButtons[currentBoost].SetActive(true);
-        EquipButtons[currentBoost].SetActive(false);
-
-        AllBoosts[currentBoost].SetActive(true);
-    }
-
-    public void Change(int thisBoost)
-    {
-        for (int i = 0; i < AllBoosts.Length; i++)
+        public void Change(int thisBoost)
         {
-            AllBoosts[i].SetActive(false);
-            EquipedButtons[i].SetActive(false);
-            EquipButtons[i].SetActive(true);
-        }
-
-        if (thisBoost == 3)
-        {
-            foreach (GameObject hero in Heroes)
+            for (int i = 0; i < AllBoosts.Length; i++)
             {
-                hero.GetComponent<SpriteRenderer>().color = shieldColor;
+                AllBoosts[i].SetActive(false);
+                EquipedButtons[i].SetActive(false);
+                EquipButtons[i].SetActive(true);
             }
-        }
-        else
-        {
-            foreach (GameObject hero in Heroes)
+
+            if (thisBoost == 3)
             {
-                hero.GetComponent<SpriteRenderer>().color = standartColor;
+                foreach (GameObject hero in Heroes)
+                {
+                    hero.GetComponent<SpriteRenderer>().color = shieldColor;
+                }
             }
+            else
+            {
+                foreach (GameObject hero in Heroes)
+                {
+                    hero.GetComponent<SpriteRenderer>().color = standartColor;
+                }
+            }
+
+            Dependency.Get<JsonStorage>().data.currentShop.currentBoost = thisBoost;
+
+            CryptoHelper.Encrypt(Dependency.Get<JsonStorage>().data, Dependency.Get<JsonStorage>().password);
+
+            AllBoosts[thisBoost].SetActive(true);
+
+            EquipedButtons[thisBoost].SetActive(true);
+            EquipButtons[thisBoost].SetActive(false);
         }
-
-        JsonStorage.instance.data.currentShop.currentBoost = thisBoost;
-
-        CryptoHelper.Encrypt(JsonStorage.instance.data, JsonStorage.instance.password);
-
-        AllBoosts[thisBoost].SetActive(true);
-
-        EquipedButtons[thisBoost].SetActive(true);
-        EquipButtons[thisBoost].SetActive(false);
     }
 }

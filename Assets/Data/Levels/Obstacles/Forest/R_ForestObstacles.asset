@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a70dedaec7240748ffd1bb6b1fc8d6c, type: 3}
+  m_Name: R_ForestObstacles
+  m_EditorClassIdentifier: 
+  obstacles:
+  - {fileID: 5972989397014983799, guid: acd9839a57fd12c43997f4ede5813008, type: 3}
+  - {fileID: 7970215843760892717, guid: e24578c5b44ec9b47bd51a540e2f2d1e, type: 3}
+  - {fileID: 4995921617682559222, guid: a7720de8b517c854289eecaf3bde3bf0, type: 3}
+  - {fileID: 4508863570334650682, guid: 860a52cc830fbbd429c7a71332206820, type: 3}

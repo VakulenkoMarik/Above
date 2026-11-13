@@ -1,10 +1,14 @@
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.Networking;
 using System.Collections;
+using DependencyControl;
+using Firebase;
+using Firebase.Auth;
+using Other;
 using TMPro;
+using UnityEngine;
+using UnityEngine.Networking;
+using UnityEngine.UI;
 
-namespace UpgradeSystem
+namespace PopUpUpdates
 {
     struct GameData
     {
@@ -31,6 +35,9 @@ namespace UpgradeSystem
         bool isAlreadyCheckedForUpdates = false;
 
         GameData latestGameData;
+        
+        private LoadingScreenActivator LoadingScreenActivator => _loadingScreenActivator ??= Dependency.Get<LoadingScreenActivator>();
+        private LoadingScreenActivator _loadingScreenActivator;
 
         void Awake()
         {
@@ -39,11 +46,8 @@ namespace UpgradeSystem
 
         public void StartAction()
         {
-            Debug.Log(isAlreadyCheckedForUpdates);
-
             if (!isAlreadyCheckedForUpdates)
             {
-                Debug.Log("is not already checked");
                 StopAllCoroutines();
                 StartCoroutine(CheckForUpdates());
             }
@@ -60,8 +64,8 @@ namespace UpgradeSystem
 
             if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
             {
-                GameManager.instance.SetActiveLoadingScreen(true);
-                GameManager.instance.SetMessage("Error");
+                LoadingScreenActivator.SetActiveLoadingScreen(true);
+                LoadingScreenActivator.SetMessage("Error");
             }
             else
             {
@@ -81,8 +85,7 @@ namespace UpgradeSystem
                 }
                 else
                 {
-                    Debug.Log("No updates");
-                    FirebaseAuthManager.instance.StartAction();
+                    //Dependency.Get<FirebaseAuthManager>().StartAction();
                 }
             }
 

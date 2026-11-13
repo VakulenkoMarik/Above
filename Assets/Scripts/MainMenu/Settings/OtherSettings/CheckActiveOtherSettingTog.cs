@@ -1,42 +1,46 @@
-using System.Collections;
-using System.Collections.Generic;
+using DependencyControl;
+using Firebase.DataControl;
+using Firebase.Storage;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CheckActiveOtherSettingTog : MonoBehaviour
+namespace MainMenu.Settings.OtherSettings
 {
-    [SerializeField] private Toggle tog;
-    [SerializeField] private OtherSetting setting;
-
-    enum OtherSetting
+    public class CheckActiveOtherSettingTog : MonoBehaviour
     {
-        ShowLevelRank,
-        Particles,
-        ShowTheSelectedBoost,
-        CameraShake,
-        Vibration
-    }
+        [SerializeField] private Toggle tog;
+        [SerializeField] private OtherSetting setting;
 
-
-    void Awake()
-    {
-        switch (setting)
+        enum OtherSetting
         {
-            case OtherSetting.ShowLevelRank:
-                tog.isOn = JsonStorage.instance.data.otherSettings.showLevelRanks;
-                break; 
-            case OtherSetting.Particles:
-                tog.isOn = JsonStorage.instance.data.otherSettings.particles;
-                break;
-            case OtherSetting.ShowTheSelectedBoost:
-                tog.isOn = JsonStorage.instance.data.otherSettings.showSelectedBoostInGame;
-                break;
-            case OtherSetting.CameraShake:
-                tog.isOn = JsonStorage.instance.data.otherSettings.cameraShake;
-                break;
-            case OtherSetting.Vibration:
-                tog.isOn = JsonStorage.instance.data.otherSettings.vibration;
-                break;
+            ShowLevelRank,
+            Particles,
+            ShowTheSelectedBoost,
+            CameraShake,
+            Vibration
+        }
+
+
+        void Awake()
+        {
+            switch (setting)
+            {
+                case OtherSetting.ShowLevelRank:
+                    tog.isOn = Dependency.Get<JsonStorage>().data.otherSettings.showLevelRanks;
+                    break; 
+                case OtherSetting.Particles:
+                    tog.isOn = Dependency.Get<JsonStorage>().data.otherSettings.particles;
+                    break;
+                case OtherSetting.ShowTheSelectedBoost:
+                    tog.isOn = Dependency.Get<JsonStorage>().data.otherSettings.showSelectedBoostInGame;
+                    break;
+                case OtherSetting.CameraShake:
+                    tog.isOn = Dependency.Get<JsonStorage>().data.otherSettings.cameraShake;
+                    break;
+                case OtherSetting.Vibration:
+                    tog.isOn = Dependency.Get<JsonStorage>().data.otherSettings.vibration;
+                    break;
+            }
         }
     }
 }

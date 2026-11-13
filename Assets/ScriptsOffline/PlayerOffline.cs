@@ -2,6 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using DependencyControl;
+using Game;
+using Other;
 using UnityEngine;
 
 public class PlayerOffline : MonoBehaviour
@@ -29,9 +32,7 @@ public class PlayerOffline : MonoBehaviour
 
     void Start()
     {
-        GameManager.instance.SetActiveLoadingScreen(false);
-        
-        StartOnClick.instance.playerOffline = this;
+        Dependency.Get<LoadingScreenActivator>().SetActiveLoadingScreen(false);
 
         audioSource = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody2D>();

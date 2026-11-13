@@ -1,44 +1,52 @@
 using System.Collections.Generic;
+using DependencyControl;
+using Encrypting;
+using Firebase.DataControl;
+using Firebase.Storage;
+using MainMenu.Select;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EquipAccIcon : MonoBehaviour
+namespace MainMenu
 {
-    public static EquipAccIcon instance;
-
-    [SerializeField] private List<SelectAccIcon> equipButtonsList;
-    [SerializeField] private AccountManagerMainMenu accountManagerMainMenu;
-
-    void Start()
+    public class EquipAccIcon : MonoBehaviour
     {
-        instance = this;
-    }
+        public static EquipAccIcon instance;
 
-    public void CheckLock()
-    {
-        foreach (SelectAccIcon select in equipButtonsList)
+        [SerializeField] private List<SelectAccIcon> equipButtonsList;
+        [SerializeField] private AccountManagerMainMenu accountManagerMainMenu;
+
+        void Start()
         {
-            select.CheckLock();
-        }
-    }
-
-    public void Change(string name, Image button)
-    {
-        JsonStorage.instance.data.userData.userIcon = name;
-
-        foreach (SelectAccIcon select in equipButtonsList)
-        {
-            Color currentColor = select.button.color;
-            currentColor.a = 0f;
-            select.button.color = currentColor;
+            instance = this;
         }
 
-        Color color = button.color;
-        color.a = 0.5f;
-        button.color = color;
+        public void CheckLock()
+        {
+            foreach (SelectAccIcon select in equipButtonsList)
+            {
+                select.CheckLock();
+            }
+        }
 
-        accountManagerMainMenu.ChangeIcon(name);
+        public void Change(string name, Image button)
+        {
+            Dependency.Get<JsonStorage>().data.userData.userIcon = name;
 
-        CryptoHelper.Encrypt(JsonStorage.instance.data, JsonStorage.instance.password);
+            foreach (SelectAccIcon select in equipButtonsList)
+            {
+                Color currentColor = select.button.color;
+                currentColor.a = 0f;
+                select.button.color = currentColor;
+            }
+
+            Color color = button.color;
+            color.a = 0.5f;
+            button.color = color;
+
+            accountManagerMainMenu.ChangeIcon(name);
+
+            CryptoHelper.Encrypt(Dependency.Get<JsonStorage>().data, Dependency.Get<JsonStorage>().password);
+        }
     }
 }

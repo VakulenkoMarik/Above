@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a70dedaec7240748ffd1bb6b1fc8d6c, type: 3}
+  m_Name: R_ShipObstacles
+  m_EditorClassIdentifier: 
+  obstacles:
+  - {fileID: 3664882417580669987, guid: a7ab34b6e0c75fd4a938170312bd66d8, type: 3}
+  - {fileID: 3701007095229606261, guid: 2cf89ff26ff78d443a53d61d3636a30b, type: 3}
+  - {fileID: 6800091752417666115, guid: 02fac17006ef4874b90486f875ad1312, type: 3}
+  - {fileID: 8587525198079110080, guid: 30bfff03be251114b8c19f2fd629c117, type: 3}

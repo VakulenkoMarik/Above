@@ -1,51 +1,54 @@
 using System.Collections;
-using System.Collections.Generic;
+using DependencyControl;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ButtonsManagerMainMenu : MonoBehaviour
+namespace Other.Buttons
 {
-    [SerializeField] private GameObject shopWindow;
-    [SerializeField] private GameObject settingsWindow;
-
-    IEnumerator LoadGameSceneAsync()
+    public class ButtonsManagerMainMenu : MonoBehaviour
     {
-        yield return new WaitForSeconds(2);
+        [SerializeField] private GameObject shopWindow;
+        [SerializeField] private GameObject settingsWindow;
 
-        SceneManager.LoadSceneAsync("Game");
-    }
+        IEnumerator LoadGameSceneAsync()
+        {
+            yield return new WaitForSeconds(2);
 
-    IEnumerator ExitWindowAsync(GameObject window)
-    {
-        yield return new WaitForSeconds(0.3f);
+            SceneManager.LoadSceneAsync("Game");
+        }
 
-        window.SetActive(false);
-    }
+        IEnumerator ExitWindowAsync(GameObject window)
+        {
+            yield return new WaitForSeconds(0.3f);
 
-    public void PlayGame()
-    {
-        GameManager.instance.gameObject.GetComponent<AudioSource>().enabled = false;
-        GameManager.instance.SetActiveLoadingScreen(true);
+            window.SetActive(false);
+        }
 
-        StartCoroutine(LoadGameSceneAsync());
-    }
+        public void PlayGame()
+        {
+            Dependency.Get<LoadingScreenActivator>().gameObject.GetComponent<AudioSource>().enabled = false;
+            Dependency.Get<LoadingScreenActivator>().SetActiveLoadingScreen(true);
 
-    public void ExitShop()
-    {
-        shopWindow.GetComponent<Animator>().SetTrigger("Exit");
+            StartCoroutine(LoadGameSceneAsync());
+        }
 
-        StartCoroutine(ExitWindowAsync(shopWindow));
-    }
+        public void ExitShop()
+        {
+            shopWindow.GetComponent<Animator>().SetTrigger("Exit");
 
-    public void ExitSettings()
-    {
-        settingsWindow.GetComponent<Animator>().SetTrigger("Exit");
+            StartCoroutine(ExitWindowAsync(shopWindow));
+        }
 
-        StartCoroutine(ExitWindowAsync(settingsWindow));
-    }
+        public void ExitSettings()
+        {
+            settingsWindow.GetComponent<Animator>().SetTrigger("Exit");
 
-    public void PrivacyPolicy()
-    {
-        Application.OpenURL("https://doc-hosting.flycricket.io/above-privacy-policy/b4629e4f-e735-4eda-83c7-0c667307bf57/privacy");
+            StartCoroutine(ExitWindowAsync(settingsWindow));
+        }
+
+        public void PrivacyPolicy()
+        {
+            Application.OpenURL("https://doc-hosting.flycricket.io/above-privacy-policy/b4629e4f-e735-4eda-83c7-0c667307bf57/privacy");
+        }
     }
 }

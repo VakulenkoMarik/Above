@@ -1,65 +1,75 @@
+using DependencyControl;
+using Encrypting;
+using Firebase.DataControl;
+using Firebase.Storage;
+using Game;
+using Hero;
+using MainMenu;
 using UnityEngine;
 
-public class AccIconsUnlockManager : MonoBehaviour
+namespace Other
 {
-    [SerializeField] private string iconName;
-    [SerializeField] private bool isNeedToBuy;
-
-    void Start()
+    public class AccIconsUnlockManager : MonoBehaviour
     {
-        if (isNeedToBuy)
-        {
-            bool isBought = JsonStorage.instance.data.icons.icons.Contains(iconName);
+        [SerializeField] private string iconName;
+        [SerializeField] private bool isNeedToBuy;
 
-            if (isBought)
+        void Start()
+        {
+            if (isNeedToBuy)
             {
-                gameObject.SetActive(false);
+                bool isBought = Dependency.Get<JsonStorage>().data.icons.icons.Contains(iconName);
+
+                if (isBought)
+                {
+                    gameObject.SetActive(false);
+                }
             }
         }
-    }
 
-    public void Unlock()
-    {
-        JsonStorage.instance.data.icons.icons.Add(iconName);
-
-        EquipAccIcon.instance.CheckLock();
-    }
-
-    public void BuyIconWithCoinsF(int price)
-    {
-        if (CoinsManagerInMainMenu.instance.coinsF >= price)
+        public void Unlock()
         {
-            JsonStorage.instance.data.icons.icons.Add(iconName);
-
-            gameObject.SetActive(false);
+            Dependency.Get<JsonStorage>().data.icons.icons.Add(iconName);
 
             EquipAccIcon.instance.CheckLock();
-            
-            CoinsManagerInMainMenu.instance.coinsF -= price;
-            JsonStorage.instance.data.userData.coinsF = CoinsManagerInMainMenu.instance.coinsF;
-
-            CryptoHelper.Encrypt(JsonStorage.instance.data, JsonStorage.instance.password);
-
-            CoinsManagerInMainMenu.instance.UpdateUI();
         }
-    }
 
-    public void BuyIconWithCoinsS(int price)
-    {
-        if (CoinsManagerInMainMenu.instance.coinsS >= price)
+        public void BuyIconWithCoinsF(int price)
         {
-            JsonStorage.instance.data.icons.icons.Add(iconName);
+            if (CoinsManagerInMainMenu.instance.coinsF >= price)
+            {
+                Dependency.Get<JsonStorage>().data.icons.icons.Add(iconName);
 
-            gameObject.SetActive(false);
+                gameObject.SetActive(false);
 
-            EquipAccIcon.instance.CheckLock();
+                EquipAccIcon.instance.CheckLock();
             
-            CoinsManagerInMainMenu.instance.coinsS -= price;
-            JsonStorage.instance.data.userData.coinsS = CoinsManagerInMainMenu.instance.coinsS;
+                CoinsManagerInMainMenu.instance.coinsF -= price;
+                Dependency.Get<JsonStorage>().data.userData.coinsF = CoinsManagerInMainMenu.instance.coinsF;
 
-            CryptoHelper.Encrypt(JsonStorage.instance.data, JsonStorage.instance.password);
+                CryptoHelper.Encrypt(Dependency.Get<JsonStorage>().data, Dependency.Get<JsonStorage>().password);
 
-            CoinsManagerInMainMenu.instance.UpdateUI();
+                CoinsManagerInMainMenu.instance.UpdateUI();
+            }
+        }
+
+        public void BuyIconWithCoinsS(int price)
+        {
+            if (CoinsManagerInMainMenu.instance.coinsS >= price)
+            {
+                Dependency.Get<JsonStorage>().data.icons.icons.Add(iconName);
+
+                gameObject.SetActive(false);
+
+                EquipAccIcon.instance.CheckLock();
+            
+                CoinsManagerInMainMenu.instance.coinsS -= price;
+                Dependency.Get<JsonStorage>().data.userData.coinsS = CoinsManagerInMainMenu.instance.coinsS;
+
+                CryptoHelper.Encrypt(Dependency.Get<JsonStorage>().data, Dependency.Get<JsonStorage>().password);
+
+                CoinsManagerInMainMenu.instance.UpdateUI();
+            }
         }
     }
 }

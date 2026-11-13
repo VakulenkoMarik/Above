@@ -1,55 +1,63 @@
 using System.Collections;
+using DependencyControl;
+using Encrypting;
+using Firebase.DataControl;
+using Firebase.Storage;
+using Other;
 using UnityEngine;
 
-public class SelectBg : MonoBehaviour
+namespace MainMenu.Select
 {
-    private int i;
-
-    [SerializeField] private GameObject[] AllBg;
-    [SerializeField] private GameObject[] AllRailings;
-
-    [SerializeField] private GameObject[] EquipButtons;
-    [SerializeField] private GameObject[] EquipedButtons;
-
-    void Start()
+    public class SelectBg : MonoBehaviour
     {
-        i = JsonStorage.instance.data.currentShop.currentBg;
+        private int i;
 
-        EquipedButtons[i].SetActive(true);
-        EquipButtons[i].SetActive(false);
+        [SerializeField] private GameObject[] AllBg;
+        [SerializeField] private GameObject[] AllRailings;
 
-        AllBg[i].SetActive(true);
-        AllRailings[i].SetActive(true);
+        [SerializeField] private GameObject[] EquipButtons;
+        [SerializeField] private GameObject[] EquipedButtons;
 
-        StartCoroutine(StartGame());
-    }
-
-    private IEnumerator StartGame()
-    {
-        yield return new WaitForSeconds(1);
-
-        GameManager.instance.SetActiveLoadingScreen(false);
-    }
-
-    public void Change(int thisBg)
-    {
-        for (int i = 0; i < AllBg.Length; i++)
+        void Start()
         {
-            AllBg[i].SetActive(false);
-            AllRailings[i].SetActive(false);
+            i = Dependency.Get<JsonStorage>().data.currentShop.currentBg;
 
-            EquipedButtons[i].SetActive(false);
-            EquipButtons[i].SetActive(true);
+            EquipedButtons[i].SetActive(true);
+            EquipButtons[i].SetActive(false);
+
+            AllBg[i].SetActive(true);
+            AllRailings[i].SetActive(true);
+
+            StartCoroutine(StartGame());
         }
 
-        JsonStorage.instance.data.currentShop.currentBg = thisBg;
+        private IEnumerator StartGame()
+        {
+            yield return new WaitForSeconds(1);
+
+            Dependency.Get<LoadingScreenActivator>().SetActiveLoadingScreen(false);
+        }
+
+        public void Change(int thisBg)
+        {
+            for (int i = 0; i < AllBg.Length; i++)
+            {
+                AllBg[i].SetActive(false);
+                AllRailings[i].SetActive(false);
+
+                EquipedButtons[i].SetActive(false);
+                EquipButtons[i].SetActive(true);
+            }
+
+            Dependency.Get<JsonStorage>().data.currentShop.currentBg = thisBg;
         
-        CryptoHelper.Encrypt(JsonStorage.instance.data, JsonStorage.instance.password);
+            CryptoHelper.Encrypt(Dependency.Get<JsonStorage>().data, Dependency.Get<JsonStorage>().password);
 
-        AllBg[thisBg].SetActive(true);
-        AllRailings[thisBg].SetActive(true);
+            AllBg[thisBg].SetActive(true);
+            AllRailings[thisBg].SetActive(true);
 
-        EquipedButtons[thisBg].SetActive(true);
-        EquipButtons[thisBg].SetActive(false);
+            EquipedButtons[thisBg].SetActive(true);
+            EquipButtons[thisBg].SetActive(false);
+        }
     }
 }

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a70dedaec7240748ffd1bb6b1fc8d6c, type: 3}
+  m_Name: L_DesertObstacles
+  m_EditorClassIdentifier: 
+  obstacles:
+  - {fileID: 2995765279680493590, guid: 6e42c4c474bbced4f9c6a1b52eb9606e, type: 3}
+  - {fileID: 8546801664971482825, guid: e52c566820dff8b47b2b0039734e206d, type: 3}
+  - {fileID: 1082073914568091951, guid: d2a636844ebf4b9478a120d55ec86548, type: 3}
+  - {fileID: 8847025293357703843, guid: 4e075fe4fb067114db523b74dee76e7c, type: 3}

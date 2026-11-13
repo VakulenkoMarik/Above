@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using DependencyControl;
+using Other;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -28,6 +30,6 @@ public class LevelManager : MonoBehaviour
 
     void Start()
     {
-        GameManager.instance.GetComponent<AudioSource>().enabled = true;
+        Dependency.Get<LoadingScreenActivator>().GetComponent<AudioSource>().enabled = true;
     }
 }
