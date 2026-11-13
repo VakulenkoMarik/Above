@@ -98,8 +98,8 @@ public class PlayerTutorial : MonoBehaviour
 
     public void Jump()
     {
-        rb.velocity = new Vector2(0, rb.velocity.y);
-        rb.velocity = new Vector2(0, jumpForce);
+        rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
+        rb.linearVelocity = new Vector2(0, jumpForce);
 
         jumpSound.PlayOneShot(jumpClip);
         
@@ -113,8 +113,8 @@ public class PlayerTutorial : MonoBehaviour
         if (jumpCount < 4)
         {
             jumpCount++;
-            rb.velocity = new Vector2(0, rb.velocity.y);
-            rb.velocity = new Vector2(0, jumpForce);
+            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
+            rb.linearVelocity = new Vector2(0, jumpForce);
 
             jumpSound.PlayOneShot(jumpClip);
             
