@@ -55,7 +55,7 @@ namespace Components
         }
 
         private void ThrowUp() {
-            _rb.velocity = new Vector2(0, JumpForce);
+            _rb.linearVelocity = new Vector2(0, JumpForce);
         }
     }
 }

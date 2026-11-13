@@ -100,8 +100,8 @@ namespace TutorialControl
 
         public void Jump()
         {
-            rb.velocity = new Vector2(0, rb.velocity.y);
-            rb.velocity = new Vector2(0, jumpForce);
+            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
+            rb.linearVelocity = new Vector2(0, jumpForce);
 
             jumpSound.PlayOneShot(jumpClip);
         
@@ -115,8 +115,8 @@ namespace TutorialControl
             if (jumpCount < 4)
             {
                 jumpCount++;
-                rb.velocity = new Vector2(0, rb.velocity.y);
-                rb.velocity = new Vector2(0, jumpForce);
+                rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
+                rb.linearVelocity = new Vector2(0, jumpForce);
 
                 jumpSound.PlayOneShot(jumpClip);
             
