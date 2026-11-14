@@ -77,3 +77,4 @@ crashlytics-build.properties
 # VS Code / new solution format
 .vscode/
 *.slnx
+*.keystore
